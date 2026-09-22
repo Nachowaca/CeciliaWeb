@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cecilia Rodríguez Lisboa — Galería y Remates</title>
+<link rel="stylesheet" href="styles.css">
+<script src="templates/landing/image-slot.js"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+:root{--color-bg:#f5f0e8;--color-surface:#ece5da;--wall:#ebe3d6;--floor:#cfc4b3;--frame:#231f1c}
+a{color:var(--color-accent)}a:hover{color:var(--color-accent-600)}
+body{min-height:100vh;display:flex;flex-direction:column}
+.wrap{width:100%;max-width:1360px;margin:0 auto;padding:0 var(--space-8)}
+.kick{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+/* nav */
+.top{border-bottom:2px solid var(--color-divider)}
+.top .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:var(--space-6);padding-block:var(--space-4)}
+.brand{display:flex;flex-direction:column;gap:6px;color:inherit;text-decoration:none;font-family:var(--font-heading);font-weight:800;font-size:15px;line-height:1.05;letter-spacing:.02em;text-transform:uppercase;cursor:pointer}
+.brand:hover{color:inherit}
+.brand::before{content:"";width:28px;height:3px;background:var(--color-text)}
+.menu{display:flex;align-items:center;gap:var(--space-6)}
+.menu button{font:inherit;font-size:14px;font-weight:600;background:none;border:0;padding:6px 0;cursor:pointer;color:var(--color-text);border-bottom:2px solid transparent}
+.menu button:hover{color:var(--color-accent)}
+.menu button[aria-current="page"]{border-bottom-color:var(--color-text)}
+.menu .btn-primary{background:var(--color-accent);padding:10px 16px;border:0;color:var(--color-bg);display:inline-flex;gap:8px;align-items:center}
+.menu .btn-primary:hover{color:var(--color-bg);background:var(--color-accent-600)}
+.menu .btn-primary[aria-current="page"]{background:var(--color-accent-700)}
+/* artist box */
+.artist{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);border:2px solid var(--color-divider);margin-top:var(--space-8)}
+.artist>div{padding:var(--space-6)}
+.artist .name{border-right:2px solid var(--color-divider);display:flex;flex-direction:column;justify-content:space-between;gap:var(--space-6)}
+.artist h1{font-size:clamp(34px,4.6vw,64px);line-height:.98;letter-spacing:-.03em;margin:0;text-wrap:balance}
+.artist .rows{display:grid;grid-template-rows:1fr 1fr;padding:0}
+.artist .row{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;gap:var(--space-3);padding:var(--space-4) var(--space-6)}
+.artist .row+.row{border-top:2px solid var(--color-divider)}
+.artist .row b{font-size:12px;color:var(--color-accent);font-weight:800}
+.artist .row span{font-size:clamp(16px,1.6vw,21px);font-weight:600;line-height:1.3;text-wrap:pretty}
+/* museum scene */
+.scene-wrap{margin-top:var(--space-6);border:2px solid var(--color-divider);border-top:0;position:relative}
+.scene{position:relative;height:clamp(420px,68vh,760px);overflow:hidden;background:var(--wall)}
+.world{position:absolute;inset:0;transform-origin:50% 48%;will-change:transform}
+.world.walk{animation:approach 9s cubic-bezier(.33,.08,.18,1) forwards}
+.world.walk .bob{animation:bob 1.1s ease-in-out 7 alternate}
+@keyframes approach{from{transform:scale(.62) translateY(4%)}to{transform:scale(1) translateY(0)}}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+.bob{position:absolute;inset:0}
+.wall{position:absolute;left:-30%;right:-30%;top:-30%;bottom:22%;background:radial-gradient(ellipse 30% 55% at 50% 18%,color-mix(in srgb,#fff 55%,var(--wall)) 0%,var(--wall) 70%)}
+.base{position:absolute;left:-30%;right:-30%;bottom:22%;height:14px;background:color-mix(in srgb,var(--floor) 70%,var(--color-text))}
+.floor{position:absolute;left:-30%;right:-30%;bottom:-30%;height:52%;background:var(--floor)}
+.piece{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);display:grid;grid-template-columns:auto auto;align-items:end;gap:28px}
+.frame{background:var(--frame);padding:16px;box-shadow:inset 0 0 0 2px #3a332d,inset 0 0 0 6px var(--frame),inset 0 0 0 7px #4a4038,0 22px 40px color-mix(in srgb,#2d2b2b 30%,transparent),0 4px 8px color-mix(in srgb,#2d2b2b 25%,transparent)}
+.mat{background:#faf7f1;padding:clamp(18px,2.4vw,34px);box-shadow:inset 0 2px 6px color-mix(in srgb,#000 22%,transparent)}
+.canvas{width:min(clamp(220px,26vw,380px),calc((clamp(420px,68vh,760px) - 150px) * .8));aspect-ratio:4/5;background:var(--color-surface);color:var(--color-neutral-700)}
+.canvas image-slot{width:100%;height:100%}
+.label{width:150px;background:#fbf8f2;padding:12px 14px;font-size:11px;line-height:1.45;box-shadow:0 2px 4px color-mix(in srgb,#2d2b2b 18%,transparent);margin-bottom:12%}
+.label strong{display:block;font-size:12px;margin-bottom:2px}
+.scene-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:var(--space-4);border-top:2px solid var(--color-divider);padding:var(--space-3) var(--space-6);background:var(--color-bg)}
+.scene-bar .kick{color:var(--color-neutral-700)}
+/* stub pages */
+.stub{padding:var(--space-8) 0;display:none}
+.stub h2{font-size:clamp(40px,6vw,88px);letter-spacing:-.03em;margin-bottom:var(--space-4)}
+.stub p{max-width:52ch;color:var(--color-neutral-700)}
+body[data-page]:not([data-page="home"]) #home{display:none}
+body[data-page]:not([data-page="home"]) .stub{display:block}
+main{flex:1;padding-bottom:var(--space-8)}
+/* footer */
+footer{border-top:2px solid var(--color-divider)}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.4fr);gap:0}
+footer .col{padding:var(--space-6) var(--space-6) var(--space-8) 0}
+footer .col+.col{border-left:2px solid var(--color-divider);padding-left:var(--space-6)}
+footer .col p{font-size:14px;margin:0}
+footer ul{list-style:none;margin:var(--space-3) 0 0;padding:0;display:grid;gap:6px;font-size:14px}
+footer ul button{font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--color-text)}
+footer ul button:hover{color:var(--color-accent)}
+/* chat */
+.chat{display:flex;flex-direction:column;border:2px solid var(--color-divider);background:var(--color-bg);margin-top:var(--space-3)}
+.chat-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:2px solid var(--color-divider);font-size:13px;font-weight:800}
+.chat-head .dot{width:8px;height:8px;background:var(--color-accent);border-radius:50%}
+.chat-head span:last-child{margin-left:auto;font-weight:400;color:var(--color-neutral-700);font-size:12px}
+.msgs{height:210px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:85%;font-size:13.5px;line-height:1.45;padding:8px 12px;text-wrap:pretty}
+.msg.bot{background:var(--color-surface);align-self:flex-start}
+.msg.me{background:var(--color-text);color:var(--color-bg);align-self:flex-end}
+.msg.ok{background:var(--color-accent-100);color:var(--color-accent-800)}
+.typing{align-self:flex-start;font-size:12px;color:var(--color-neutral-700)}
+.quick{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 12px}
+.quick button{font:inherit;font-size:12px;padding:5px 10px;border:1px solid var(--color-divider);background:transparent;cursor:pointer;color:var(--color-text)}
+.quick button:hover{border-color:var(--color-accent);color:var(--color-accent)}
+.chat form{display:grid;grid-template-columns:minmax(0,1fr) auto;border-top:2px solid var(--color-divider)}
+.chat input{border:0;background:transparent;padding:12px 14px;font:inherit;font-size:14px;color:var(--color-text);min-width:0}
+.chat input:focus-visible{outline:2px solid var(--color-accent);outline-offset:-2px}
+.chat form .btn{border-radius:0;height:100%;padding:0 16px}
+.legal{border-top:2px solid var(--color-divider)}
+.legal .wrap{display:flex;justify-content:space-between;gap:var(--space-4);padding-block:var(--space-3);font-size:12px;color:var(--color-neutral-700)}
+@media (max-width:900px){
+.wrap{padding:0 var(--space-4)}
+.menu{gap:var(--space-4)}
+.artist{grid-template-columns:minmax(0,1fr)}
+.artist .name{border-right:0;border-bottom:2px solid var(--color-divider)}
+footer .wrap{grid-template-columns:minmax(0,1fr)}
+footer .col,footer .col+.col{border-left:0;padding:var(--space-6) 0}
+footer .col+.col{border-top:2px solid var(--color-divider)}
+.label{display:none}.piece{grid-template-columns:auto}
+}
+@media (max-width:620px){
+.top .wrap{grid-template-columns:minmax(0,1fr)}
+.menu{flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){.world.walk .bob{animation:none}}
+</style>
+</head>
+<body data-page="home">
+<header class="top">
+<div class="wrap">
+<a class="brand" data-go="home" tabindex="0">Cecilia<br>Rodríguez Lisboa</a>
+<nav class="menu" aria-label="Principal">
+<button data-go="galeria">Galería</button>
+<button data-go="talleres">Talleres</button>
+<button data-go="clases">Clases</button>
+<button class="btn btn-primary" data-go="remates"><i data-lucide="gavel" width="16" height="16"></i>Remates</button>
+</nav>
+</div>
+</header>
+<main>
+<div class="wrap" id="home">
+<section class="artist" aria-label="Datos de la artista">
+<div class="name">
+<span class="kick">Galería + Remates</span>
+<h1>Cecilia Rodríguez Lisboa</h1>
+</div>
+<div class="rows">
+<div class="row"><b>01</b><span>Artista / Profesora / Tallerista</span></div>
+<div class="row"><b>02</b><span>Bellas Artes / Escenógrafa / Realización Teatral</span></div>
+</div>
+</section>
+<section class="scene-wrap" aria-label="Obra destacada">
+<div class="scene">
+<div class="world walk" id="world">
+<div class="bob">
+<div class="wall"></div><div class="base"></div><div class="floor"></div>
+<div class="piece">
+<div class="frame"><div class="mat"><div class="canvas"><image-slot id="obra-home" shape="rect" placeholder="Obra de Cecilia"></image-slot></div></div></div>
+<div class="label"><strong>Título de la obra</strong>Óleo sobre tela<br>100 × 80 cm, 2026</div>
+</div>
+</div>
+</div>
+</div>
+<div class="scene-bar">
+<span class="kick">Obra destacada · Sala 01</span>
+<button class="btn btn-secondary" id="replay"><i data-lucide="rotate-ccw" width="16" height="16"></i>Volver a recorrer</button>
+</div>
+</section>
+</div>
+<div class="wrap stub" id="stub">
+<span class="kick" style="color:var(--color-accent)">Sección</span>
+<h2 id="stubTitle">Galería</h2>
+<p>Esta sección se diseña en el próximo paso.</p>
+<button class="btn btn-secondary" data-go="home"><i data-lucide="arrow-left" width="16" height="16"></i>Volver al inicio</button>
+</div>
+</main>
+<footer>
+<div class="wrap">
+<div class="col">
+<span class="kick">Cecilia Rodríguez Lisboa</span>
+<ul>
+<li><button data-go="galeria">Galería</button></li>
+<li><button data-go="talleres">Talleres</button></li>
+<li><button data-go="clases">Clases</button></li>
+<li><button data-go="remates">Remates</button></li>
+</ul>
+</div>
+<div class="col">
+<span class="kick">Contacto</span>
+<ul>
+<li><a href="#">contacto@cecilia.uy</a></li>
+<li>Montevideo, Uruguay</li>
+</ul>
+</div>
+<div class="col">
+<span class="kick">Consultas</span>
+<div class="chat">
+<div class="chat-head"><span class="dot"></span><span>Asistente de la galería</span><span>Le avisa a Cecilia</span></div>
+<div class="msgs" id="msgs" aria-live="polite"></div>
+<div class="quick" id="quick">
+<button>¿Cómo funcionan los remates?</button>
+<button>Talleres y clases</button>
+<button>Quiero comprar una obra</button>
+</div>
+<form id="chatForm"><input id="chatIn" placeholder="Escribí tu consulta…" autocomplete="off"><button class="btn btn-primary" aria-label="Enviar"><i data-lucide="send" width="16" height="16"></i></button></form>
+</div>
+</div>
+</div>
+<div class="legal"><div class="wrap"><span>© 2026 Cecilia Rodríguez Lisboa</span><span>Galería y remates de obra</span></div></div>
+</footer>
+<script>
+lucide.createIcons();
+const titles={galeria:'Galería',talleres:'Talleres',clases:'Clases',remates:'Remates'};
+function go(p){
+document.body.dataset.page=p;
+document.querySelectorAll('.menu [data-go]').forEach(b=>b.toggleAttribute('aria-current',b.dataset.go===p)&&b.setAttribute('aria-current','page'));
+if(p!=='home')document.getElementById('stubTitle').textContent=titles[p];
+else replay();
+window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();go(el.dataset.go)}));
+const world=document.getElementById('world');
+function replay(){world.classList.remove('walk');void world.offsetWidth;world.classList.add('walk')}
+document.getElementById('replay').onclick=replay;
+
+const msgs=document.getElementById('msgs'),form=document.getElementById('chatForm'),inp=document.getElementById('chatIn');
+let stage='idle',lead={};
+function add(t,who='bot',cls=''){const d=document.createElement('div');d.className='msg '+who+' '+cls;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight}
+function bot(t,cls){const ty=document.createElement('div');ty.className='typing';ty.textContent='Escribiendo…';msgs.appendChild(ty);msgs.scrollTop=msgs.scrollHeight;setTimeout(()=>{ty.remove();add(t,'bot',cls)},700)}
+function reply(t){
+const s=t.toLowerCase();
+if(stage==='name'){lead.name=t;stage='email';return bot('Gracias, '+t.split(' ')[0]+'. ¿A qué mail o WhatsApp te puede responder Cecilia?')}
+if(stage==='email'){lead.contact=t;stage='msg';return bot('Perfecto. Contame en una línea qué te interesa y se lo paso.')}
+if(stage==='msg'){stage='idle';return bot('Listo, le envié tu mensaje a Cecilia. Te va a responder a '+lead.contact+'.','ok')}
+if(/remate|subast|puja|ofert/.test(s))return bot('En Remates vas a ver las obras disponibles y cómo ofertar. Si querés, le aviso a Cecilia que te interesa una obra puntual.')
+if(/taller|clase|curso|aprend/.test(s))return bot('Cecilia da talleres y clases de pintura. ¿Querés que le pase tus datos para que te cuente horarios y cupos?')
+if(/compr|precio|obra|cuadro|vend/.test(s)){stage='name';return bot('¡Buenísimo! Le paso tu consulta a Cecilia. ¿Cómo te llamás?')}
+if(/si|sí|dale|ok|claro/.test(s)){stage='name';return bot('Genial. ¿Cómo te llamás?')}
+return bot('Puedo ayudarte con remates, talleres, clases o la compra de una obra. Si preferís, le dejo tu mensaje directo a Cecilia.')
+}
+function send(t){if(!t.trim())return;add(t,'me');reply(t.trim())}
+form.onsubmit=e=>{e.preventDefault();send(inp.value);inp.value=''};
+document.querySelectorAll('#quick button').forEach(b=>b.onclick=()=>send(b.textContent));
+add('Hola, soy el asistente de la galería. ¿En qué te ayudo?');
+</script>
+</body>
+</html>
