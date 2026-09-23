@@ -673,14 +673,17 @@ if(['galeria','talleres','clases','remates'].includes(initial))go(initial);
 <script>
 (function(){
 const S=[
+{p:'home',t:'.top .brand',h:'Tu nombre y tu foto',x:'Arriba siempre está tu retrato con tu nombre. Tocalo y volvés al inicio desde cualquier parte.'},
 {p:'home',t:'.artist',h:'Tu presentación',x:'Acá aparecen tu nombre y a qué te dedicás. Lo cambiás cuando quieras desde tu panel, sin tocar código.'},
 {p:'home',t:'.scene-wrap',h:'Tu obra destacada',x:'Una sala de museo animada donde se camina hasta tu obra principal. Elegís cuál mostrar desde el panel.'},
-{p:'home',t:'.chat-section',h:'El asistente',x:'Los visitantes te escriben, y responde por vos: remates, talleres, mail de contacto, obras nuevas y eventos.'},
-{p:'galeria',t:'#galleryGrid',h:'La Galería',x:'Tus obras en una pared de museo. Cada una tiene su precio, un botón para postear en Instagram y otro para comprar.'},
-{p:'galeria',t:'.menu .btn-primary',h:'Remates',x:'Al tocar Comprar, la obra pasa a Remates: solo ven lo que eligieron, no todo el catálogo.'},
+{p:'home',t:'.chat-section',h:'El asistente',x:'Los visitantes te escriben y responde por vos: remates, talleres, mail de contacto, obras nuevas y eventos.'},
+{p:'home',t:'#igSection',h:'Tu Instagram',x:'Una miniatura de tu perfil (@ce_lisboa) con tus últimas publicaciones y un botón grande para seguirte. Hoy muestra obras de ejemplo.'},
+{p:'galeria',t:'#galleryGrid',h:'La Galería',x:'Cada obra que subís se ve sola dentro de un marco. Al tocarla se abre en grande, con técnica, medidas, precio y los botones Comprar y Postear en Instagram.'},
+{p:'galeria',t:'#galleryGrid',h:'Disponible, reservada o vendida',x:'Vos marcás el estado de cada obra. Las reservadas y vendidas muestran una etiqueta y no se pueden comprar.'},
+{p:'galeria',t:'.menu .btn-primary',h:'Remates',x:'Al tocar Comprar, la obra pasa a Remates: cada visitante ve solo lo que eligió, no todo el catálogo.'},
 {p:'galeria',t:'#cartBtn',h:'El carrito',x:'Junta las obras elegidas. Dejan nombre y contacto, y vos coordinás el pago y la entrega.'},
 {p:'talleres',t:'#talleresPage .gallery-head',h:'Talleres y Clases',x:'Páginas propias con descripción, horario y hasta 3 fotos por taller o clase.'},
-{p:'home',t:'.top',h:'Todo lo editás vos',x:'Con tu Gmail entrás a tu panel: subís obras, cambiás textos, talleres y clases. Lo que guardás aparece en la web.',last:1}
+{p:'home',t:'.top',h:'Todo lo editás vos',x:'Con tu Gmail entrás a tu panel: subís obras (recortás la foto, elegís marco y estado), y cambiás textos, talleres y clases. Lo que guardás aparece en la web.',last:1}
 ];
 let i=-1,spot,tip;
 const q=s=>document.querySelector(s);
