@@ -16,10 +16,13 @@ body{min-height:100vh;display:flex;flex-direction:column}
 /* nav */
 .top{border-bottom:2px solid var(--color-divider)}
 .top .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:var(--space-6);padding-block:var(--space-4)}
-.brand{display:flex;flex-direction:column;gap:6px;color:inherit;text-decoration:none;font-family:var(--font-heading);font-weight:800;font-size:15px;line-height:1.05;letter-spacing:.02em;text-transform:uppercase;cursor:pointer}
+.brand{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none;font-family:var(--font-heading);font-weight:800;font-size:15px;line-height:1.05;letter-spacing:.02em;text-transform:uppercase;cursor:pointer}
 .brand:hover{color:inherit}
-.brand::before{content:"";width:28px;height:3px;background:var(--color-accent);border-radius:2px;transition:width .3s var(--bounce)}
-.brand:hover::before{width:44px}
+.brand-txt{display:flex;flex-direction:column;gap:6px}
+.brand-photo{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:62% 30%;box-shadow:0 0 0 2px var(--color-bg),0 0 0 4px var(--color-accent-300);flex:none;transition:transform .3s var(--bounce)}
+.brand:hover .brand-photo{transform:scale(1.06)}
+.brand-txt::before{content:"";width:28px;height:3px;background:var(--color-accent);border-radius:2px;transition:width .3s var(--bounce)}
+.brand:hover .brand-txt::before{width:44px}
 .menu{display:flex;align-items:center;gap:var(--space-6)}
 .menu button{font:inherit;font-size:14px;font-weight:600;background:none;border:0;padding:6px 0;cursor:pointer;color:var(--color-text);border-bottom:2px solid transparent;transition:transform .2s var(--bounce),color .15s}
 .menu button:not(.btn){background:linear-gradient(var(--color-accent),var(--color-accent)) 0 100%/0 2px no-repeat;transition:background-size .3s var(--bounce),color .2s}
@@ -242,7 +245,7 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <body data-page="home">
 <header class="top">
 <div class="wrap">
-<a class="brand" data-go="home" tabindex="0">Cecilia<br>Rodríguez Lisboa</a>
+<a class="brand" data-go="home" tabindex="0"><img class="brand-photo" src="assets/cecilia-retrato.png" alt="Cecilia Rodríguez Lisboa"><span class="brand-txt">Cecilia<br>Rodríguez Lisboa</span></a>
 <nav class="menu" aria-label="Principal">
 <button data-go="galeria">Galería</button>
 <button data-go="talleres">Talleres</button>
