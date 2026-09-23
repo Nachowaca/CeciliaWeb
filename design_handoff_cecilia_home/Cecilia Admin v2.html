@@ -254,7 +254,7 @@ const STORE_KEY='cecilia_site_v1';
 function loadStore(){try{const raw=localStorage.getItem(STORE_KEY);return raw?JSON.parse(raw):null}catch(e){return null}}
 function saveStore(){try{localStorage.setItem(STORE_KEY,JSON.stringify(site))}catch(e){}}
 const DEFAULTS={
-hero:{kicker:'Galería + Remates',name:'Cecilia Rodríguez Lisboa',row1:'Artista / Profesora / Tallerista',row2:'Bellas Artes / Escenógrafa / Realización Teatral',artTitle:'Título de la obra',artTechnique:'Óleo sobre tela',artSize:'100 × 80 cm, 2026',artImg:''},
+hero:{kicker:'Galería + Remates',name:'Cecilia Rodríguez Lisboa',row1:'Artista / Profesora / Tallerista',row2:'Bellas Artes / Escenógrafa / Realización Teatral',artTitle:'Título de la obra',artTechnique:'Óleo sobre tela',artSize:'100 × 80 cm, 2026',artImg:'assets/obra-boceto.webp'},
 works:[
 {id:'1',img:'https://picsum.photos/id/1025/700/700',title:'Sin título I',technique:'Óleo sobre tela',price:350},
 {id:'2',img:'https://picsum.photos/id/1041/700/700',title:'Sin título II',technique:'Óleo sobre tela',price:420},
@@ -296,7 +296,8 @@ document.getElementById('hArtTitle').value=site.hero.artTitle;
 document.getElementById('hArtTechnique').value=site.hero.artTechnique;
 document.getElementById('hArtSize').value=site.hero.artSize;
 const drop=document.getElementById('artDrop');
-if(site.hero.artImg){drop.classList.add('has-img');drop.innerHTML=`<img src="${site.hero.artImg}">`}
+const artImg=site.hero.artImg||DEFAULTS.hero.artImg;
+if(artImg){drop.classList.add('has-img');drop.innerHTML=`<img src="${artImg}">`}
 }
 document.getElementById('artFile').addEventListener('change',e=>{
 const f=e.target.files[0];if(!f)return;

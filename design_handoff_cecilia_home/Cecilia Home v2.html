@@ -146,8 +146,14 @@ footer ul button{font:inherit;background:none;border:0;padding:0;cursor:pointer;
 footer ul button:hover{color:var(--color-accent);transform:translateX(4px)}
 /* chat */
 .chat{display:flex;flex-direction:column;border:2px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);margin-top:var(--space-3)}
-.chat-home{max-width:420px;margin:var(--space-4) auto 0;font-size:13px}
+.chat-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:var(--space-8);align-items:start;margin-top:var(--space-6)}
+.chat-info{padding-top:var(--space-2)}
+.chat-info h3{font-size:clamp(22px,2.4vw,30px);letter-spacing:-.02em;margin:6px 0 10px}
+.chat-info p{color:var(--color-neutral-700);font-size:14.5px;line-height:1.6;max-width:44ch}
+@media (max-width:800px){.chat-section{grid-template-columns:1fr}}
+.chat-home{max-width:460px;margin:0;font-size:13px;background:#fff}
 .chat-home .msgs{height:130px;padding:10px}
+.chat-home .msg.bot{background:var(--color-surface)}
 .chat-home .msg{font-size:12.5px;padding:6px 10px}
 .chat-home .quick{padding:0 10px 10px}
 .chat-home .quick button{font-size:11px;padding:4px 8px}
@@ -245,6 +251,12 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <button class="btn btn-secondary" id="replay"><i data-lucide="rotate-ccw" width="16" height="16"></i>Volver a recorrer</button>
 </div>
 </section>
+<div class="chat-section">
+<div class="chat-info">
+<span class="kick" style="color:var(--color-accent)">Asistente</span>
+<h3>Escribile a Cecilia</h3>
+<p>Dejá tu mensaje y el asistente te responde al toque. Preguntale por remates, talleres y clases, o pedile el mail de contacto — y de paso te cuenta si hay obras nuevas o próximos eventos. Todo lo que dejes le llega directo a Cecilia.</p>
+</div>
 <div class="chat chat-home">
 <div class="chat-head"><span class="dot"></span><span>Asistente de la galería</span><span>Le avisa a Cecilia</span></div>
 <div class="msgs" id="msgs" aria-live="polite"></div>
@@ -254,6 +266,7 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <button>Quiero comprar una obra</button>
 </div>
 <form id="chatForm"><input id="chatIn" placeholder="Escribí tu consulta…" autocomplete="off"><button class="btn btn-primary" aria-label="Enviar"><i data-lucide="send" width="16" height="16"></i></button></form>
+</div>
 </div>
 </div>
 <div class="gallery-page" id="galeriaPage">
@@ -330,7 +343,7 @@ lucide.createIcons();
 const STORE_KEY='cecilia_site_v1';
 function loadStore(){try{const raw=localStorage.getItem(STORE_KEY);return raw?JSON.parse(raw):null}catch(e){return null}}
 const DEFAULTS={
-hero:{kicker:'Galería + Remates',name:'Cecilia Rodríguez Lisboa',row1:'Artista / Profesora / Tallerista',row2:'Bellas Artes / Escenógrafa / Realización Teatral',artTitle:'Título de la obra',artTechnique:'Óleo sobre tela',artSize:'100 × 80 cm, 2026',artImg:''},
+hero:{kicker:'Galería + Remates',name:'Cecilia Rodríguez Lisboa',row1:'Artista / Profesora / Tallerista',row2:'Bellas Artes / Escenógrafa / Realización Teatral',artTitle:'Título de la obra',artTechnique:'Óleo sobre tela',artSize:'100 × 80 cm, 2026',artImg:'assets/obra-boceto.webp'},
 works:[
 {id:'1',img:'https://picsum.photos/id/1025/700/700',title:'Sin título I',technique:'Óleo sobre tela',price:350},
 {id:'2',img:'https://picsum.photos/id/1041/700/700',title:'Sin título II',technique:'Óleo sobre tela',price:420},
@@ -349,8 +362,9 @@ document.getElementById('heroRow1').textContent=site.hero.row1;
 document.getElementById('heroRow2').textContent=site.hero.row2;
 document.getElementById('heroArtTitle').textContent=site.hero.artTitle;
 document.getElementById('heroArtMeta').innerHTML=site.hero.artTechnique+'<br>'+site.hero.artSize;
-if(site.hero.artImg){
-document.getElementById('obraImg').src=site.hero.artImg;
+const artImg=site.hero.artImg||DEFAULTS.hero.artImg;
+if(artImg){
+document.getElementById('obraImg').src=artImg;
 document.getElementById('obraImg').style.display='block';
 document.getElementById('obra-home').style.display='none';
 }
@@ -520,11 +534,14 @@ const s=t.toLowerCase();
 if(stage==='name'){lead.name=t;stage='email';return bot('Gracias, '+t.split(' ')[0]+'. ¿A qué mail o WhatsApp te puede responder Cecilia?')}
 if(stage==='email'){lead.contact=t;stage='msg';return bot('Perfecto. Contame en una línea qué te interesa y se lo paso.')}
 if(stage==='msg'){stage='idle';return bot('Listo, le envié tu mensaje a Cecilia. Te va a responder a '+lead.contact+'.','ok')}
+if(/mail|contacto|correo|email/.test(s))return bot('Podés escribirle directo a contacto@cecilia.uy, o dejarme tu consulta acá y se la paso igual.')
+if(/evento|exposici|muestra|inaugura/.test(s))return bot('Por ahora no hay eventos anunciados, pero avisale a Cecilia que te interesa y te avisa apenas tenga fecha.')
+if(/nueva|novedad|últimas obras|ultimas obras/.test(s))return bot(`Tiene ${WORKS.length} obras publicadas en la Galería ahora mismo. Date una vuelta y elegí la que más te guste.`)
 if(/remate|subast|puja|ofert/.test(s))return bot('En Remates vas a ver las obras disponibles y cómo ofertar. Si querés, le aviso a Cecilia que te interesa una obra puntual.')
 if(/taller|clase|curso|aprend/.test(s))return bot('Cecilia da talleres y clases de pintura. ¿Querés que le pase tus datos para que te cuente horarios y cupos?')
 if(/compr|precio|obra|cuadro|vend/.test(s)){stage='name';return bot('¡Buenísimo! Le paso tu consulta a Cecilia. ¿Cómo te llamás?')}
 if(/si|sí|dale|ok|claro/.test(s)){stage='name';return bot('Genial. ¿Cómo te llamás?')}
-return bot('Puedo ayudarte con remates, talleres, clases o la compra de una obra. Si preferís, le dejo tu mensaje directo a Cecilia.')
+return bot('Puedo contarte de remates, talleres, clases, obras nuevas o pasarte el contacto de Cecilia. Si preferís, le dejo tu mensaje directo a ella.')
 }
 function send(t){if(!t.trim())return;add(t,'me');reply(t.trim())}
 form.onsubmit=e=>{e.preventDefault();send(inp.value);inp.value=''};
