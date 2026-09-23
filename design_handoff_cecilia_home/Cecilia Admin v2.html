@@ -38,26 +38,44 @@ main{flex:1;padding-block:var(--space-8)}
 .dash{display:none}
 body.logged-in .dash{display:block}
 body.logged-in .login-screen{display:none}
-.dash-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-8)}
+.dash-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-6)}
 .dash-head h1{font-size:clamp(28px,3.6vw,42px);letter-spacing:-.03em;margin:0}
 .dash-head p{color:var(--color-neutral-700);margin:0}
 .grid2{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:var(--space-8);align-items:start}
-@media (max-width:900px){.grid2{grid-template-columns:1fr}}
+@media (max-width:900px){
+.grid2{grid-template-columns:1fr}
+.wrap{padding:0 var(--space-4)}
+}
+@media (max-width:560px){
+.upload-card,.item-card .item-body{padding:var(--space-4)}
+.item-card .item-head{padding:12px var(--space-4)}
+.row2{grid-template-columns:1fr}
+.dash-head{flex-direction:column;align-items:flex-start}
+}
 
-/* upload card */
-.upload-card{border:2px solid var(--color-divider);border-radius:var(--radius-lg);padding:var(--space-6);background:#fff;animation:popIn .5s var(--bounce) both}
+/* tabs */
+.tabs{display:flex;gap:8px;margin-bottom:var(--space-8);flex-wrap:wrap}
+.tab-btn{font:inherit;font-size:13px;font-weight:800;padding:9px 18px;border-radius:999px;border:1.5px solid var(--color-divider);background:#fff;cursor:pointer;transition:transform .2s var(--bounce),background .15s,color .15s}
+.tab-btn:hover{transform:translateY(-2px)}
+.tab-btn.active{background:var(--color-text);color:var(--color-bg);border-color:var(--color-text)}
+.tab-panel{display:none;animation:popIn .4s var(--bounce) both}
+.tab-panel.active{display:block}
+
+/* cards / fields */
+.upload-card{border:2px solid var(--color-divider);border-radius:var(--radius-lg);padding:var(--space-8);background:#fff;box-shadow:var(--shadow-sm)}
 .upload-card h2{font-size:19px;margin-bottom:var(--space-1)}
 .upload-card .sub{color:var(--color-neutral-700);font-size:13px;margin-bottom:var(--space-6)}
 .dropzone{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;border:2px dashed var(--color-divider);border-radius:var(--radius-md);padding:var(--space-8) var(--space-4);text-align:center;cursor:pointer;transition:border-color .2s,background .2s,transform .2s var(--bounce);background:var(--color-surface);margin-bottom:var(--space-4)}
 .dropzone:hover{border-color:var(--color-accent);transform:translateY(-2px)}
-.dropzone.has-img{padding:0;border-style:solid;overflow:hidden}
-.dropzone.has-img img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.dropzone.has-img{padding:0;border-style:solid;overflow:hidden;aspect-ratio:4/5}
+.dropzone.has-img img{width:100%;height:100%;object-fit:cover;display:block}
 .dropzone i{color:var(--color-neutral-600);margin-bottom:8px}
 .dropzone span{display:block;font-size:13px;color:var(--color-neutral-700)}
-.field{margin-bottom:var(--space-4)}
-.field label{display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:var(--color-neutral-700)}
-.field input,.field textarea{width:100%;padding:10px 12px;font:inherit;font-size:14px;border:1.5px solid var(--color-divider);border-radius:var(--radius-sm);background:var(--color-surface);transition:border-color .15s}
-.field input:focus-visible,.field textarea:focus-visible{outline:none;border-color:var(--color-accent)}
+.field{margin-bottom:var(--space-5)}
+.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:7px;color:var(--color-neutral-600)}
+.field input,.field textarea{width:100%;padding:11px 13px;font:inherit;font-size:14.5px;border:1.5px solid var(--color-divider);border-radius:var(--radius-sm);background:var(--color-surface);transition:border-color .15s,box-shadow .15s}
+.field input:focus-visible,.field textarea:focus-visible{outline:none;border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-100)}
+.field textarea{min-height:70px;resize:vertical}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)}
 .submit-btn{width:100%;justify-content:center;border-radius:var(--radius-lg);padding:12px;font-size:15px;margin-top:var(--space-2)}
 .toast{display:none;align-items:center;gap:8px;background:var(--color-accent-100);color:var(--color-accent-800);padding:10px 14px;border-radius:var(--radius-md);font-size:13px;font-weight:700;margin-top:var(--space-4);animation:popIn .3s var(--bounce) both}
@@ -67,7 +85,7 @@ body.logged-in .login-screen{display:none}
 .works h2{font-size:19px;margin-bottom:var(--space-4)}
 .wlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
 @media (max-width:560px){.wlist{grid-template-columns:1fr}}
-.wcard{border:1.5px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:#fff;display:flex;flex-direction:column;transition:transform .25s var(--bounce),box-shadow .25s;animation:popIn .45s var(--bounce) both}
+.wcard{position:relative;border:1.5px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:#fff;display:flex;flex-direction:column;transition:transform .25s var(--bounce),box-shadow .25s;animation:popIn .45s var(--bounce) both}
 .wcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
 .wcard img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:var(--color-surface)}
 .wcard .wbody{padding:var(--space-3);display:flex;flex-direction:column;gap:4px;flex:1}
@@ -76,7 +94,25 @@ body.logged-in .login-screen{display:none}
 .wcard .wprice{margin-top:auto;font-weight:800;color:var(--color-accent);font-size:14px}
 .wcard .wtag{align-self:flex-start;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--color-accent-100);color:var(--color-accent-800);padding:3px 8px;border-radius:999px}
 .wcard.new{outline:2px solid var(--color-accent);outline-offset:2px}
+.wcard .del2{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.92);border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text);transition:transform .2s var(--bounce),color .15s}
+.wcard .del2:hover{color:var(--color-accent);transform:scale(1.1)}
 .empty{border:2px dashed var(--color-divider);border-radius:var(--radius-lg);padding:var(--space-8);text-align:center;color:var(--color-neutral-700);font-size:14px}
+
+/* list-editor items (talleres/clases) */
+.item-card{border:1.5px solid var(--color-divider);border-radius:var(--radius-lg);background:#fff;margin-bottom:var(--space-6);overflow:hidden;box-shadow:var(--shadow-sm);animation:popIn .4s var(--bounce) both}
+.item-card .item-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px var(--space-6);background:var(--color-surface);border-bottom:1.5px solid var(--color-divider)}
+.item-card .item-head .item-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--color-accent);color:#fff;font-size:11px;font-weight:800;flex:none}
+.item-card .item-head .item-label{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--color-neutral-700)}
+.item-card .item-body{padding:var(--space-6)}
+.item-card .del-btn{background:none;border:0;color:var(--color-neutral-600);cursor:pointer;padding:4px;transition:color .15s,transform .2s var(--bounce)}
+.item-card .del-btn:hover{color:var(--color-accent);transform:scale(1.1)}
+.photos-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 var(--space-4)}
+.mini-drop{aspect-ratio:4/3;border:2px dashed var(--color-divider);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;background:var(--color-surface);transition:border-color .2s,transform .2s var(--bounce)}
+.mini-drop:hover{border-color:var(--color-accent);transform:translateY(-2px)}
+.mini-drop img{width:100%;height:100%;object-fit:cover;display:block}
+.mini-drop i{color:var(--color-neutral-600);width:18px;height:18px}
+.add-btn{width:100%;border:2px dashed var(--color-divider);border-radius:var(--radius-md);padding:16px;background:transparent;color:var(--color-neutral-700);font:inherit;font-weight:800;font-size:14px;cursor:pointer;transition:border-color .2s,color .2s,transform .2s var(--bounce);display:flex;align-items:center;justify-content:center;gap:8px}
+.add-btn:hover{border-color:var(--color-accent);color:var(--color-accent);transform:translateY(-2px)}
 
 /* published note */
 .note{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-neutral-700);margin-top:var(--space-4)}
@@ -99,7 +135,7 @@ body.logged-in .login-screen{display:none}
 <div class="login-card">
 <div class="ink">CR</div>
 <h1>Panel de Cecilia</h1>
-<p>Entrá con tu cuenta de Gmail para subir obras. Cada obra que cargues aparece automáticamente en la Galería pública.</p>
+<p>Entrá con tu cuenta de Gmail para editar tu web: Inicio, Galería, Talleres y Clases.</p>
 <button class="google-btn" id="googleBtn">
 <svg class="gicon" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16.3 4 9.6 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.2-5.1l-6.6-5.4C29.6 35.4 27 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.2 4.2-4.1 5.6l6.6 5.4C41.6 35.6 44 30.2 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
 Ingresar con Google
@@ -112,16 +148,55 @@ Ingresar con Google
 <div class="dash-head">
 <div>
 <span class="kick" style="color:var(--color-accent)">Panel privado</span>
-<h1>Tus obras</h1>
-<p>Subí una obra nueva y aparece al toque en la Galería.</p>
+<h1>Editá tu web</h1>
+<p>Los cambios se guardan y se ven al toque en la web pública.</p>
 </div>
 </div>
+<div class="tabs">
+<button class="tab-btn active" data-tab="inicio">Inicio</button>
+<button class="tab-btn" data-tab="galeria">Galería</button>
+<button class="tab-btn" data-tab="talleres">Talleres</button>
+<button class="tab-btn" data-tab="clases">Clases</button>
+</div>
+
+<!-- ===== INICIO ===== -->
+<div class="tab-panel active" id="panel-inicio">
+<div class="grid2">
+<div class="upload-card">
+<h2>Textos principales</h2>
+<div class="sub">Lo primero que ve quien entra a tu web.</div>
+<div class="field"><label>Kicker (arriba del título)</label><input id="hKicker"></div>
+<div class="field"><label>Nombre / título</label><input id="hName"></div>
+<div class="field"><label>Renglón 01</label><input id="hRow1"></div>
+<div class="field"><label>Renglón 02</label><input id="hRow2"></div>
+</div>
+<div class="upload-card">
+<h2>Obra destacada</h2>
+<div class="sub">La pintura de la animación de inicio.</div>
+<label class="dropzone" id="artDrop">
+<i data-lucide="image-plus" width="28" height="28"></i>
+<span>Arrastrá una imagen o hacé clic para elegirla</span>
+<input type="file" id="artFile" accept="image/*" hidden>
+</label>
+<div class="field"><label>Título de la obra</label><input id="hArtTitle"></div>
+<div class="row2">
+<div class="field"><label>Técnica</label><input id="hArtTechnique"></div>
+<div class="field"><label>Medidas / año</label><input id="hArtSize"></div>
+</div>
+<button class="btn btn-primary submit-btn" id="saveInicio"><i data-lucide="save" width="16" height="16"></i>Guardar cambios</button>
+<div class="toast" id="toastInicio"><i data-lucide="check-circle-2" width="16" height="16"></i>¡Guardado! Ya se ve en tu web.</div>
+</div>
+</div>
+</div>
+
+<!-- ===== GALERÍA ===== -->
+<div class="tab-panel" id="panel-galeria">
 <div class="grid2">
 <div class="upload-card">
 <h2>Nueva obra</h2>
 <div class="sub">Foto, título y datos básicos.</div>
 <form id="uploadForm">
-<label class="dropzone" id="dropzone" for="fileInput">
+<label class="dropzone" id="dropzone">
 <i data-lucide="image-plus" width="28" height="28"></i>
 <span>Arrastrá una imagen o hacé clic para elegirla</span>
 <input type="file" id="fileInput" accept="image/*" hidden>
@@ -136,60 +211,72 @@ Ingresar con Google
 <input id="fTechnique" placeholder="Óleo sobre tela" value="Óleo sobre tela">
 </div>
 <div class="field">
-<label for="fSize">Medidas</label>
-<input id="fSize" placeholder="100 × 80 cm">
-</div>
-</div>
-<div class="row2">
-<div class="field">
-<label for="fYear">Año</label>
-<input id="fYear" placeholder="2026" value="2026">
-</div>
-<div class="field">
-<label for="fPrice">Precio (remate) — opcional</label>
-<input id="fPrice" placeholder="USD 350">
+<label for="fPrice">Precio (USD)</label>
+<input id="fPrice" placeholder="350">
 </div>
 </div>
 <button class="btn btn-primary submit-btn" type="submit"><i data-lucide="upload" width="16" height="16"></i>Publicar en la Galería</button>
 <div class="toast" id="toast"><i data-lucide="check-circle-2" width="16" height="16"></i>¡Listo! Ya está publicada en tu Galería.</div>
 </form>
-<div class="note"><i data-lucide="sparkles" width="14" height="14"></i>Diseño de muestra — la publicación real se conecta cuando sumemos la base de datos.</div>
 </div>
 
 <div class="works">
-<h2>Publicadas (<span id="workCount">3</span>)</h2>
+<h2>Publicadas (<span id="workCount">0</span>)</h2>
 <div class="wlist" id="workList"></div>
 </div>
 </div>
 </div>
+
+<!-- ===== TALLERES ===== -->
+<div class="tab-panel" id="panel-talleres">
+<div id="talleresList"></div>
+<button class="add-btn" id="addTaller"><i data-lucide="plus" width="16" height="16"></i>Agregar taller</button>
+<button class="btn btn-primary submit-btn" id="saveTalleres" style="max-width:280px"><i data-lucide="save" width="16" height="16"></i>Guardar cambios</button>
+<div class="toast" id="toastTalleres"><i data-lucide="check-circle-2" width="16" height="16"></i>¡Guardado! Ya se ve en tu web.</div>
+</div>
+
+<!-- ===== CLASES ===== -->
+<div class="tab-panel" id="panel-clases">
+<div id="clasesList"></div>
+<button class="add-btn" id="addClase"><i data-lucide="plus" width="16" height="16"></i>Agregar clase</button>
+<button class="btn btn-primary submit-btn" id="saveClases" style="max-width:280px"><i data-lucide="save" width="16" height="16"></i>Guardar cambios</button>
+<div class="toast" id="toastClases"><i data-lucide="check-circle-2" width="16" height="16"></i>¡Guardado! Ya se ve en tu web.</div>
+</div>
+
+<div class="note"><i data-lucide="sparkles" width="14" height="14"></i>Diseño de muestra — guarda en este navegador. La versión final se conecta a una base de datos real.</div>
+</div>
 </main>
 <script>
 lucide.createIcons();
-const seed=[
-{img:'https://picsum.photos/id/1025/500/625',title:'Sin título I',technique:'Óleo sobre tela',size:'100 × 80 cm',year:'2026',price:''},
-{img:'https://picsum.photos/id/1041/500/625',title:'Sin título II',technique:'Óleo sobre tela',size:'90 × 70 cm',year:'2026',price:'USD 420'},
-{img:'https://picsum.photos/id/1074/500/625',title:'Sin título III',technique:'Óleo sobre tela',size:'110 × 90 cm',year:'2025',price:''},
-];
-let works=[...seed];
 
-function renderWorks(highlightFirst){
-const list=document.getElementById('workList');
-document.getElementById('workCount').textContent=works.length;
-if(!works.length){list.innerHTML='<div class="empty">Todavía no subiste obras.</div>';return}
-list.innerHTML=works.map((w,i)=>`
-<div class="wcard ${highlightFirst && i===0?'new':''}">
-<img src="${w.img}" alt="${w.title}">
-<div class="wbody">
-${highlightFirst && i===0?'<span class="wtag">Nueva</span>':''}
-<span class="wtitle">${w.title}</span>
-<span class="wmeta">${w.technique} · ${w.size}, ${w.year}</span>
-${w.price?`<span class="wprice">${w.price}</span>`:''}
-</div>
-</div>`).join('');
-}
-renderWorks(false);
+// ---------- almacenamiento compartido con la web pública ----------
+const STORE_KEY='cecilia_site_v1';
+function loadStore(){try{const raw=localStorage.getItem(STORE_KEY);return raw?JSON.parse(raw):null}catch(e){return null}}
+function saveStore(){try{localStorage.setItem(STORE_KEY,JSON.stringify(site))}catch(e){}}
+const DEFAULTS={
+hero:{kicker:'Galería + Remates',name:'Cecilia Rodríguez Lisboa',row1:'Artista / Profesora / Tallerista',row2:'Bellas Artes / Escenógrafa / Realización Teatral',artTitle:'Título de la obra',artTechnique:'Óleo sobre tela',artSize:'100 × 80 cm, 2026',artImg:''},
+works:[
+{id:'1',img:'https://picsum.photos/id/1025/700/700',title:'Sin título I',technique:'Óleo sobre tela',price:350},
+{id:'2',img:'https://picsum.photos/id/1041/700/700',title:'Sin título II',technique:'Óleo sobre tela',price:420},
+{id:'3',img:'https://picsum.photos/id/1074/700/700',title:'Sin título III',technique:'Óleo sobre tela',price:500},
+{id:'4',img:'https://picsum.photos/id/1080/700/700',title:'Sin título IV',technique:'Óleo sobre tela',price:300},
+],
+talleres:[{id:'t1',title:'Taller de óleo — nivel inicial',desc:'Técnicas básicas de óleo sobre tela, materiales y composición.',schedule:'Martes 18:00 · Montevideo',photos:['https://picsum.photos/id/103/400/300','https://picsum.photos/id/104/400/300','https://picsum.photos/id/106/400/300']}],
+clases:[{id:'c1',title:'Clases particulares',desc:'Clases individuales adaptadas a tu nivel y objetivos.',schedule:'A coordinar',photos:['https://picsum.photos/id/110/400/300','https://picsum.photos/id/111/400/300','https://picsum.photos/id/112/400/300']}]
+};
+let site=loadStore()||JSON.parse(JSON.stringify(DEFAULTS));
 
-// login (simulated)
+function fileToDataURL(file,cb){const r=new FileReader();r.onload=()=>cb(r.result);r.readAsDataURL(file)}
+function toast(id){const t=document.getElementById(id);t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+function uid(p){return p+Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
+
+// ---------- tabs ----------
+document.querySelectorAll('.tab-btn').forEach(b=>b.onclick=()=>{
+document.querySelectorAll('.tab-btn').forEach(x=>x.classList.toggle('active',x===b));
+document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+b.dataset.tab));
+});
+
+// ---------- login (simulado) ----------
 document.getElementById('googleBtn').onclick=()=>{
 document.body.classList.add('logged-in');
 document.getElementById('whoami').style.display='flex';
@@ -199,40 +286,161 @@ document.body.classList.remove('logged-in');
 document.getElementById('whoami').style.display='none';
 };
 
-// dropzone preview
+// ---------- INICIO ----------
+function fillInicioForm(){
+document.getElementById('hKicker').value=site.hero.kicker;
+document.getElementById('hName').value=site.hero.name;
+document.getElementById('hRow1').value=site.hero.row1;
+document.getElementById('hRow2').value=site.hero.row2;
+document.getElementById('hArtTitle').value=site.hero.artTitle;
+document.getElementById('hArtTechnique').value=site.hero.artTechnique;
+document.getElementById('hArtSize').value=site.hero.artSize;
+const drop=document.getElementById('artDrop');
+if(site.hero.artImg){drop.classList.add('has-img');drop.innerHTML=`<img src="${site.hero.artImg}">`}
+}
+document.getElementById('artFile').addEventListener('change',e=>{
+const f=e.target.files[0];if(!f)return;
+fileToDataURL(f,url=>{
+site.hero.artImg=url;
+const drop=document.getElementById('artDrop');
+drop.classList.add('has-img');
+drop.innerHTML=`<img src="${url}">`;
+});
+});
+document.getElementById('artDrop').addEventListener('click',()=>document.getElementById('artFile').click());
+document.getElementById('saveInicio').onclick=()=>{
+site.hero.kicker=document.getElementById('hKicker').value.trim();
+site.hero.name=document.getElementById('hName').value.trim();
+site.hero.row1=document.getElementById('hRow1').value.trim();
+site.hero.row2=document.getElementById('hRow2').value.trim();
+site.hero.artTitle=document.getElementById('hArtTitle').value.trim();
+site.hero.artTechnique=document.getElementById('hArtTechnique').value.trim();
+site.hero.artSize=document.getElementById('hArtSize').value.trim();
+saveStore();
+toast('toastInicio');
+};
+
+// ---------- GALERÍA ----------
 const dz=document.getElementById('dropzone');
 let pendingImg=null;
-function onFileChange(){
-const input=document.getElementById('fileInput');
-const f=input.files[0];
-if(!f)return;
-pendingImg=URL.createObjectURL(f);
-dz.classList.add('has-img');
-dz.innerHTML=`<img src="${pendingImg}" alt="Vista previa">`;
-}
-document.getElementById('fileInput').addEventListener('change',onFileChange);
+document.getElementById('fileInput').addEventListener('change',e=>{
+const f=e.target.files[0];if(!f)return;
+fileToDataURL(f,url=>{pendingImg=url;dz.classList.add('has-img');dz.innerHTML=`<img src="${url}">`});
+});
+dz.addEventListener('click',()=>document.getElementById('fileInput').click());
 
-document.getElementById('uploadForm').onsubmit=(e)=>{
+function renderWorks(highlightId){
+document.getElementById('workCount').textContent=site.works.length;
+const list=document.getElementById('workList');
+if(!site.works.length){list.innerHTML='<div class="empty">Todavía no subiste obras.</div>';return}
+list.innerHTML=site.works.map(w=>`
+<div class="wcard ${w.id===highlightId?'new':''}">
+<button class="del2" data-del-work="${w.id}" aria-label="Eliminar"><i data-lucide="trash-2" width="14" height="14"></i></button>
+<img src="${w.img}" alt="${w.title}">
+<div class="wbody">
+${w.id===highlightId?'<span class="wtag">Nueva</span>':''}
+<span class="wtitle">${w.title}</span>
+<span class="wmeta">${w.technique}</span>
+<span class="wprice">USD ${w.price}</span>
+</div>
+</div>`).join('');
+lucide.createIcons();
+list.querySelectorAll('[data-del-work]').forEach(b=>b.onclick=()=>{
+if(!confirm('¿Eliminar esta obra de la Galería?'))return;
+site.works=site.works.filter(w=>w.id!==b.dataset.delWork);
+saveStore();renderWorks();
+});
+}
+document.getElementById('uploadForm').onsubmit=e=>{
 e.preventDefault();
 const title=document.getElementById('fTitle').value.trim()||'Sin título';
 const technique=document.getElementById('fTechnique').value.trim()||'Óleo sobre tela';
-const size=document.getElementById('fSize').value.trim()||'—';
-const year=document.getElementById('fYear').value.trim()||'2026';
-const price=document.getElementById('fPrice').value.trim();
-works=[{img:pendingImg||'https://picsum.photos/500/625?random='+Date.now(),title,technique,size,year,price},...works];
-renderWorks(true);
-const toast=document.getElementById('toast');
-toast.classList.add('show');
-setTimeout(()=>toast.classList.remove('show'),2600);
+const price=document.getElementById('fPrice').value.trim()||'0';
+const id=uid('w');
+site.works=[{id,img:pendingImg||'https://picsum.photos/500/625?random='+Date.now(),title,technique,price},...site.works];
+saveStore();
+renderWorks(id);
+toast('toast');
 e.target.reset();
 dz.classList.remove('has-img');
-dz.innerHTML='<i data-lucide="image-plus" width="28" height="28"></i><span>Arrastrá una imagen o hacé clic para elegirla</span><input type="file" id="fileInput" accept="image/*" hidden>';
-document.getElementById('fileInput').addEventListener('change',onFileChange);
+dz.innerHTML='<i data-lucide="image-plus" width="28" height="28"></i><span>Arrastrá una imagen o hacé clic para elegirla</span>';
 lucide.createIcons();
 pendingImg=null;
 document.getElementById('fTechnique').value='Óleo sobre tela';
-document.getElementById('fYear').value='2026';
 };
+
+// ---------- TALLERES / CLASES (editor de lista con 3 fotos) ----------
+function photoSlotHTML(item,i){
+const src=item.photos[i];
+return `<label class="mini-drop" data-photo-slot="${i}">${src?`<img src="${src}">`:'<i data-lucide="image-plus"></i>'}<input type="file" accept="image/*" hidden></label>`;
+}
+function itemCardHTML(item,idx,kind){
+return `
+<div class="item-card" data-id="${item.id}">
+<div class="item-head">
+<span class="item-label"><span class="item-num">${idx+1}</span>${kind==='taller'?'Taller':'Clase'}</span>
+<button class="del-btn" data-del-item="${item.id}" aria-label="Eliminar"><i data-lucide="trash-2" width="16" height="16"></i></button>
+</div>
+<div class="item-body">
+<div class="field"><label>Título</label><input class="f-title" value="${item.title.replace(/"/g,'&quot;')}"></div>
+<div class="field"><label>Descripción</label><textarea class="f-desc">${item.desc}</textarea></div>
+<div class="field"><label>Horario / modalidad</label><input class="f-schedule" value="${item.schedule.replace(/"/g,'&quot;')}"></div>
+<div class="field" style="margin-bottom:0"><label>Fotos (hasta 3)</label>
+<div class="photos-row">${[0,1,2].map(i=>photoSlotHTML(item,i)).join('')}</div>
+</div>
+</div>
+</div>`;
+}
+function renderList(kind){
+const arr=site[kind==='taller'?'talleres':'clases'];
+const el=document.getElementById(kind==='taller'?'talleresList':'clasesList');
+el.innerHTML=arr.map((item,idx)=>itemCardHTML(item,idx,kind)).join('');
+lucide.createIcons();
+el.querySelectorAll('.item-card').forEach(card=>{
+const id=card.dataset.id;
+const item=arr.find(x=>x.id===id);
+card.querySelector('.f-title').oninput=e=>item.title=e.target.value;
+card.querySelector('.f-desc').oninput=e=>item.desc=e.target.value;
+card.querySelector('.f-schedule').oninput=e=>item.schedule=e.target.value;
+card.querySelectorAll('[data-photo-slot]').forEach(slot=>{
+const i=+slot.dataset.photoSlot;
+function wireInput(){
+const input=slot.querySelector('input');
+slot.onclick=ev=>{if(ev.target!==input)input.click()};
+input.onchange=()=>{
+const f=input.files[0];if(!f)return;
+fileToDataURL(f,url=>{
+item.photos[i]=url;
+slot.innerHTML=`<img src="${url}"><input type="file" accept="image/*" hidden>`;
+wireInput();
+});
+};
+}
+wireInput();
+});
+card.querySelector('[data-del-item]').onclick=()=>{
+if(!confirm(`¿Eliminar "${item.title}"? Recordá tocar Guardar cambios para confirmar.`))return;
+site[kind==='taller'?'talleres':'clases']=arr.filter(x=>x.id!==id);
+renderList(kind);
+};
+});
+}
+document.getElementById('addTaller').onclick=()=>{
+site.talleres.push({id:uid('t'),title:'Nuevo taller',desc:'',schedule:'',photos:[null,null,null]});
+renderList('taller');
+};
+document.getElementById('addClase').onclick=()=>{
+site.clases.push({id:uid('c'),title:'Nueva clase',desc:'',schedule:'',photos:[null,null,null]});
+renderList('clase');
+};
+document.getElementById('saveTalleres').onclick=()=>{saveStore();toast('toastTalleres')};
+document.getElementById('saveClases').onclick=()=>{saveStore();toast('toastClases')};
+
+// ---------- init ----------
+fillInicioForm();
+renderWorks();
+renderList('taller');
+renderList('clase');
 </script>
 </body>
 </html>

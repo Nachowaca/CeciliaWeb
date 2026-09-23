@@ -57,6 +57,7 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .mat{background:#faf7f1;padding:clamp(18px,2.4vw,34px);box-shadow:inset 0 2px 6px color-mix(in srgb,#000 22%,transparent)}
 .canvas{width:min(clamp(220px,26vw,380px),calc((clamp(420px,68vh,760px) - 150px) * .8));aspect-ratio:4/5;background:var(--color-surface);color:var(--color-neutral-700)}
 .canvas image-slot{width:100%;height:100%}
+.canvas img{width:100%;height:100%;object-fit:cover;display:block}
 .label{width:150px;background:#fbf8f2;padding:12px 14px;font-size:11px;line-height:1.45;box-shadow:0 2px 4px color-mix(in srgb,#2d2b2b 18%,transparent);margin-bottom:12%;border-radius:var(--radius-sm);animation:float 3.4s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 .label strong{display:block;font-size:12px;margin-bottom:2px}
@@ -70,8 +71,18 @@ body[data-page]:not([data-page="home"]) #home{display:none}
 body[data-page]:not([data-page="home"]) .stub{display:block}
 body[data-page="galeria"] #stub{display:none}
 body[data-page="remates"] #stub{display:none}
-.gallery-page#rematesPage{display:none}
+body[data-page="talleres"] #stub{display:none}
+body[data-page="clases"] #stub{display:none}
+.gallery-page#rematesPage,.gallery-page#talleresPage,.gallery-page#clasesPage{display:none}
 body[data-page="remates"] .gallery-page#rematesPage{display:block}
+body[data-page="talleres"] .gallery-page#talleresPage{display:block}
+body[data-page="clases"] .gallery-page#clasesPage{display:block}
+.tcard{border:1.5px solid rgba(32,30,29,.14);border-radius:var(--radius-lg);background:#fff;padding:var(--space-6);margin-bottom:var(--space-6);animation:popIn .5s var(--bounce) both}
+.tcard h3{font-size:22px;margin-bottom:6px}
+.tcard .tsched{font-size:12.5px;font-weight:700;color:var(--color-accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.tcard p{color:var(--color-neutral-700);margin-bottom:0}
+.tcard .tphotos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.tcard .tphotos img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius-md);display:block}
 .gcard-price{font-weight:800;color:var(--color-accent);font-size:15px}
 .gcard .order-btn{background:var(--color-text);color:var(--color-bg);border-color:var(--color-text)}
 .gcard .order-btn:hover{background:#000}
@@ -209,12 +220,12 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <div class="wrap" id="home">
 <section class="artist" aria-label="Datos de la artista">
 <div class="name">
-<span class="kick">Galería + Remates</span>
-<h1>Cecilia Rodríguez Lisboa</h1>
+<span class="kick" id="heroKicker">Galería + Remates</span>
+<h1 id="heroName">Cecilia Rodríguez Lisboa</h1>
 </div>
 <div class="rows">
-<div class="row"><b>01</b><span>Artista / Profesora / Tallerista</span></div>
-<div class="row"><b>02</b><span>Bellas Artes / Escenógrafa / Realización Teatral</span></div>
+<div class="row"><b>01</b><span id="heroRow1">Artista / Profesora / Tallerista</span></div>
+<div class="row"><b>02</b><span id="heroRow2">Bellas Artes / Escenógrafa / Realización Teatral</span></div>
 </div>
 </section>
 <section class="scene-wrap" aria-label="Obra destacada">
@@ -223,8 +234,8 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <div class="bob">
 <div class="wall"></div><div class="base"></div><div class="floor"></div>
 <div class="piece">
-<div class="frame"><div class="mat"><div class="canvas"><image-slot id="obra-home" shape="rect" placeholder="Obra de Cecilia"></image-slot></div></div></div>
-<div class="label"><strong>Título de la obra</strong>Óleo sobre tela<br>100 × 80 cm, 2026</div>
+<div class="frame"><div class="mat"><div class="canvas"><image-slot id="obra-home" shape="rect" placeholder="Obra de Cecilia"></image-slot><img id="obraImg" style="display:none"></div></div></div>
+<div class="label"><strong id="heroArtTitle">Título de la obra</strong><span id="heroArtMeta">Óleo sobre tela<br>100 × 80 cm, 2026</span></div>
 </div>
 </div>
 </div>
@@ -257,9 +268,32 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <div class="wrap gallery-head">
 <span class="kick" style="color:var(--color-accent)">Sección</span>
 <h2>Remates</h2>
-<p>Elegí una obra y hacé el pedido. Cecilia te contacta para coordinar el pago y la entrega.</p>
+<p>Las obras que elegiste en la Galería. Confirmá el pedido y Cecilia te contacta para coordinar el pago y la entrega.</p>
 </div>
 <div class="wrap gallery-grid" id="rematesGrid"></div>
+<div class="wrap" id="rematesEmpty" style="display:none;text-align:center;padding:40px 0">
+<p style="color:var(--color-neutral-700);margin-bottom:16px">Todavía no elegiste ninguna obra. Andá a la Galería y tocá "Comprar" en la que te guste.</p>
+<button class="btn btn-primary" data-go="galeria" style="border-radius:999px"><i data-lucide="image" width="16" height="16"></i>Ir a la Galería</button>
+</div>
+<div class="wrap" id="rematesFootWrap" style="display:none;max-width:420px;margin-top:24px">
+<button class="btn btn-primary submit-btn" id="rematesSendBtn" style="border-radius:999px;justify-content:center"><i data-lucide="shopping-bag" width="16" height="16"></i>Enviar pedido</button>
+</div>
+</div>
+<div class="gallery-page" id="talleresPage">
+<div class="wrap gallery-head">
+<span class="kick" style="color:var(--color-accent)">Sección</span>
+<h2>Talleres</h2>
+<p>Talleres de pintura dictados por Cecilia.</p>
+</div>
+<div class="wrap" id="talleresList"></div>
+</div>
+<div class="gallery-page" id="clasesPage">
+<div class="wrap gallery-head">
+<span class="kick" style="color:var(--color-accent)">Sección</span>
+<h2>Clases</h2>
+<p>Clases particulares y grupales.</p>
+</div>
+<div class="wrap" id="clasesList"></div>
 </div>
 <div class="wrap stub" id="stub">
 <span class="kick" style="color:var(--color-accent)">Sección</span>
@@ -291,29 +325,55 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 </footer>
 <script>
 lucide.createIcons();
+
+// ---- datos editados por Cecilia en su panel (mismo formato/clave que Cecilia Admin v2.html) ----
+const STORE_KEY='cecilia_site_v1';
+function loadStore(){try{const raw=localStorage.getItem(STORE_KEY);return raw?JSON.parse(raw):null}catch(e){return null}}
+const DEFAULTS={
+hero:{kicker:'Galería + Remates',name:'Cecilia Rodríguez Lisboa',row1:'Artista / Profesora / Tallerista',row2:'Bellas Artes / Escenógrafa / Realización Teatral',artTitle:'Título de la obra',artTechnique:'Óleo sobre tela',artSize:'100 × 80 cm, 2026',artImg:''},
+works:[
+{id:'1',img:'https://picsum.photos/id/1025/700/700',title:'Sin título I',technique:'Óleo sobre tela',price:350},
+{id:'2',img:'https://picsum.photos/id/1041/700/700',title:'Sin título II',technique:'Óleo sobre tela',price:420},
+{id:'3',img:'https://picsum.photos/id/1074/700/700',title:'Sin título III',technique:'Óleo sobre tela',price:500},
+{id:'4',img:'https://picsum.photos/id/1080/700/700',title:'Sin título IV',technique:'Óleo sobre tela',price:300},
+],
+talleres:[{id:'t1',title:'Taller de óleo — nivel inicial',desc:'Técnicas básicas de óleo sobre tela, materiales y composición.',schedule:'Martes 18:00 · Montevideo',photos:['https://picsum.photos/id/103/400/300','https://picsum.photos/id/104/400/300','https://picsum.photos/id/106/400/300']}],
+clases:[{id:'c1',title:'Clases particulares',desc:'Clases individuales adaptadas a tu nivel y objetivos.',schedule:'A coordinar',photos:['https://picsum.photos/id/110/400/300','https://picsum.photos/id/111/400/300','https://picsum.photos/id/112/400/300']}]
+};
+const site=loadStore()||DEFAULTS;
+
+function applyHero(){
+document.getElementById('heroKicker').textContent=site.hero.kicker;
+document.getElementById('heroName').textContent=site.hero.name;
+document.getElementById('heroRow1').textContent=site.hero.row1;
+document.getElementById('heroRow2').textContent=site.hero.row2;
+document.getElementById('heroArtTitle').textContent=site.hero.artTitle;
+document.getElementById('heroArtMeta').innerHTML=site.hero.artTechnique+'<br>'+site.hero.artSize;
+if(site.hero.artImg){
+document.getElementById('obraImg').src=site.hero.artImg;
+document.getElementById('obraImg').style.display='block';
+document.getElementById('obra-home').style.display='none';
+}
+}
+applyHero();
+
 const titles={talleres:'Talleres',clases:'Clases'};
 function go(p){
 document.body.dataset.page=p;
 document.querySelectorAll('.menu [data-go]').forEach(b=>b.toggleAttribute('aria-current',b.dataset.go===p)&&b.setAttribute('aria-current','page'));
 if(p==='home')replay();
-else if(titles[p])document.getElementById('stubTitle').textContent=titles[p];
 window.scrollTo({top:0,behavior:'smooth'});
 }
-document.querySelectorAll('header [data-go],footer [data-go],.stub [data-go]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();go(el.dataset.go)}));
+document.querySelectorAll('header [data-go],footer [data-go],.stub [data-go],#rematesEmpty [data-go]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();go(el.dataset.go)}));
 
 // ---- obras (compartidas entre Galería y Remates) ----
-const WORKS=[
-{id:'1',img:'https://picsum.photos/id/1025/700/700',title:'Sin título I',meta:'Óleo sobre tela',price:350},
-{id:'2',img:'https://picsum.photos/id/1041/700/700',title:'Sin título II',meta:'Óleo sobre tela',price:420},
-{id:'3',img:'https://picsum.photos/id/1074/700/700',title:'Sin título III',meta:'Óleo sobre tela',price:500},
-{id:'4',img:'https://picsum.photos/id/1080/700/700',title:'Sin título IV',meta:'Óleo sobre tela',price:300},
-];
+const WORKS=site.works;
 function renderGallery(){
 document.getElementById('galleryGrid').innerHTML=WORKS.map(w=>`
 <figure class="gcard">
 <img loading="lazy" alt="Obra de Cecilia — ${w.title}" src="${w.img}">
 <figcaption>
-<span>${w.title} · ${w.meta}</span>
+<span>${w.title} · ${w.technique}</span>
 <span class="gcard-price">USD ${w.price}</span>
 <div class="gcard-actions">
 <button class="btn btn-primary ig-btn" data-obra="${w.id}"><i data-lucide="instagram" width="16" height="16"></i>Postear</button>
@@ -323,22 +383,47 @@ document.getElementById('galleryGrid').innerHTML=WORKS.map(w=>`
 </figure>`).join('');
 lucide.createIcons();
 }
+function renderListPage(kind){
+const arr=site[kind]||[];
+const el=document.getElementById(kind+'List');
+if(!el)return;
+if(!arr.length){el.innerHTML='<p style="color:var(--color-neutral-700)">Todavía no hay contenido acá.</p>';return}
+el.innerHTML=arr.map(item=>{
+const photos=(item.photos||[]).filter(Boolean);
+return `<article class="tcard">
+<div class="tsched">${item.schedule||''}</div>
+<h3>${item.title}</h3>
+<p>${item.desc||''}</p>
+${photos.length?`<div class="tphotos">${photos.map(p=>`<img src="${p}" loading="lazy" alt="${item.title}">`).join('')}</div>`:''}
+</article>`;
+}).join('');
+}
 function renderRemates(){
-document.getElementById('rematesGrid').innerHTML=WORKS.map(w=>`
+const grid=document.getElementById('rematesGrid'),empty=document.getElementById('rematesEmpty'),footWrap=document.getElementById('rematesFootWrap');
+if(!cart.length){
+grid.innerHTML='';
+empty.style.display='block';
+footWrap.style.display='none';
+return;
+}
+empty.style.display='none';
+footWrap.style.display='block';
+grid.innerHTML=cart.map(w=>`
 <figure class="gcard">
 <img loading="lazy" alt="Obra de Cecilia — ${w.title}" src="${w.img}">
 <figcaption>
-<span>${w.title} · ${w.meta}</span>
+<span>${w.title} · ${w.technique}</span>
 <span class="gcard-price">USD ${w.price}</span>
 <div class="gcard-actions">
-<button class="btn btn-primary order-btn" data-obra="${w.id}"><i data-lucide="shopping-bag" width="16" height="16"></i>Hacer el pedido</button>
+<button class="btn btn-secondary remove-btn" data-obra="${w.id}"><i data-lucide="x" width="16" height="16"></i>Quitar</button>
 </div>
 </figcaption>
 </figure>`).join('');
 lucide.createIcons();
 }
 renderGallery();
-renderRemates();
+renderListPage('talleres');
+renderListPage('clases');
 
 document.body.addEventListener('click',e=>{
 const go_=e.target.closest('[data-go]');
@@ -350,9 +435,10 @@ ig.innerHTML='<i data-lucide="check" width="16" height="16"></i>¡Posteado!';
 lucide.createIcons();
 setTimeout(()=>{ig.innerHTML=orig;lucide.createIcons()},1800);
 }
-const order=e.target.closest('.order-btn');
-if(order){addToCart(order.dataset.obra);openCart()}
+const remove=e.target.closest('.remove-btn');
+if(remove){removeFromCart(remove.dataset.obra)}
 });
+document.getElementById('rematesSendBtn').onclick=()=>{openCart();showOrderForm()};
 
 // ---- carrito ----
 let cart=[];
@@ -386,6 +472,7 @@ lucide.createIcons();
 items.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>removeFromCart(b.dataset.remove));
 }
 renderCartFoot();
+renderRemates();
 }
 function renderCartFoot(){
 const foot=document.getElementById('cartFoot');
@@ -415,6 +502,7 @@ const badge=document.getElementById('cartBadge');
 badge.textContent='0';badge.hidden=true;
 document.getElementById('cartItems').innerHTML='<div class="cart-empty">Todavía no elegiste ninguna obra.</div>';
 foot.innerHTML=`<div class="order-success">¡Listo, ${name.split(' ')[0]}! Le avisamos a Cecilia y te va a escribir a ${contact} para coordinar el pago y la entrega.</div>`;
+renderRemates();
 };
 }
 renderCart();
