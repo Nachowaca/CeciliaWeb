@@ -75,7 +75,7 @@ body[data-page="galeria"] #stub{display:none}
 body[data-page="galeria"] .gallery-page{display:block}
 .gallery-head h2{font-size:clamp(36px,5vw,64px);letter-spacing:-.03em;margin-bottom:var(--space-2)}
 .gallery-head p{color:var(--color-neutral-700);max-width:56ch}
-.gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-6);margin-top:var(--space-8)}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-6);margin-top:var(--space-8)}
 .gcard{margin:0;border-radius:var(--radius-lg);overflow:hidden;background:#fafafa;border:1px solid var(--color-neutral-200);box-shadow:var(--shadow-sm);transition:transform .3s var(--bounce),box-shadow .3s;animation:popIn .5s var(--bounce) both}
 .gcard:nth-child(2){animation-delay:.06s}
 .gcard:nth-child(3){animation-delay:.12s}
@@ -89,11 +89,13 @@ body[data-page="galeria"] .gallery-page{display:block}
 .gcard .ig-btn:hover{filter:brightness(1.08)}
 .gcard .buy-btn{border-color:var(--color-accent);color:var(--color-accent)}
 .gcard .buy-btn:hover{background:var(--color-accent-100)}
-@media (max-width:900px){.gallery-page{margin:0 calc(-1 * var(--space-4));padding:var(--space-6) var(--space-4)}.gallery-grid{grid-template-columns:1fr}}
+@media (max-width:1100px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.gallery-page{margin:0 calc(-1 * var(--space-4));padding:var(--space-6) var(--space-4)}}
+@media (max-width:560px){.gallery-grid{grid-template-columns:1fr}}
 main{flex:1;padding-bottom:var(--space-8)}
 /* footer */
 footer{border-top:2px solid var(--color-divider)}
-footer .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.4fr);gap:0}
+footer .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0}
 footer .col{padding:var(--space-6) var(--space-6) var(--space-8) 0}
 footer .col+.col{border-left:2px solid var(--color-divider);padding-left:var(--space-6)}
 footer .col p{font-size:14px;margin:0}
@@ -102,6 +104,13 @@ footer ul button{font:inherit;background:none;border:0;padding:0;cursor:pointer;
 footer ul button:hover{color:var(--color-accent);transform:translateX(4px)}
 /* chat */
 .chat{display:flex;flex-direction:column;border:2px solid var(--color-divider);border-radius:var(--radius-md);overflow:hidden;background:var(--color-bg);margin-top:var(--space-3)}
+.chat-home{max-width:420px;margin:var(--space-4) auto 0;font-size:13px}
+.chat-home .msgs{height:130px;padding:10px}
+.chat-home .msg{font-size:12.5px;padding:6px 10px}
+.chat-home .quick{padding:0 10px 10px}
+.chat-home .quick button{font-size:11px;padding:4px 8px}
+.chat-home .chat-head{padding:8px 12px;font-size:12px}
+.chat-home input{padding:9px 12px;font-size:13px}
 .chat-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:2px solid var(--color-divider);font-size:13px;font-weight:800}
 .chat-head .dot{width:8px;height:8px;background:var(--color-accent);border-radius:50%;animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--color-accent) 45%,transparent)}50%{box-shadow:0 0 0 6px transparent}}
@@ -183,6 +192,16 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <button class="btn btn-secondary" id="replay"><i data-lucide="rotate-ccw" width="16" height="16"></i>Volver a recorrer</button>
 </div>
 </section>
+<div class="chat chat-home">
+<div class="chat-head"><span class="dot"></span><span>Asistente de la galería</span><span>Le avisa a Cecilia</span></div>
+<div class="msgs" id="msgs" aria-live="polite"></div>
+<div class="quick" id="quick">
+<button>¿Cómo funcionan los remates?</button>
+<button>Talleres y clases</button>
+<button>Quiero comprar una obra</button>
+</div>
+<form id="chatForm"><input id="chatIn" placeholder="Escribí tu consulta…" autocomplete="off"><button class="btn btn-primary" aria-label="Enviar"><i data-lucide="send" width="16" height="16"></i></button></form>
+</div>
 </div>
 <div class="gallery-page" id="galeriaPage">
 <div class="wrap gallery-head">
@@ -257,19 +276,6 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <li><a href="#">contacto@cecilia.uy</a></li>
 <li>Montevideo, Uruguay</li>
 </ul>
-</div>
-<div class="col">
-<span class="kick">Consultas</span>
-<div class="chat">
-<div class="chat-head"><span class="dot"></span><span>Asistente de la galería</span><span>Le avisa a Cecilia</span></div>
-<div class="msgs" id="msgs" aria-live="polite"></div>
-<div class="quick" id="quick">
-<button>¿Cómo funcionan los remates?</button>
-<button>Talleres y clases</button>
-<button>Quiero comprar una obra</button>
-</div>
-<form id="chatForm"><input id="chatIn" placeholder="Escribí tu consulta…" autocomplete="off"><button class="btn btn-primary" aria-label="Enviar"><i data-lucide="send" width="16" height="16"></i></button></form>
-</div>
 </div>
 </div>
 <div class="legal"><div class="wrap"><span>© 2026 Cecilia Rodríguez Lisboa</span><span>Galería y remates de obra</span></div></div>
