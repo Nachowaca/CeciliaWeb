@@ -71,7 +71,7 @@ Fondo bone (`#f5f0e8`) y superficie tostada (`#ece5da`) sobre tinta casi negra (
 
 ## Typography
 
-Una sola familia, Archivo, en dos pesos: 800 para títulos (siempre con letter-spacing negativo, `-0.03em`) y 400 para texto de cuerpo. Los "kickers" (etiquetas de sección) son mayúsculas 11px con tracking positivo (`0.12em`) — el contraste entre tracking negativo en títulos y positivo en kickers es intencional. Sin itálicas ni pesos intermedios.
+Una sola familia, Archivo, en tres pesos: 300 solo para la frase de la pared de la sala, 800 para títulos (siempre con letter-spacing negativo, `-0.03em`) y 400 para texto de cuerpo. Los "kickers" (etiquetas de sección) son mayúsculas 11px con tracking positivo (`0.12em`) — el contraste entre tracking negativo en títulos y positivo en kickers es intencional. Sin itálicas; el peso 300 se reserva a la frase.
 
 ## Layout
 
@@ -102,6 +102,8 @@ Radios de tres tamaños: `8px` (chico, inputs/fotos), `14px` (medio, tarjetas), 
 - **estado de obra**: etiqueta (`.chip`) Reservada (ámbar) o Vendida (tinta) sobre el mockup; las disponibles no llevan etiqueta. Comprar queda deshabilitado con el nombre del estado.
 - **hovers**: sutiles. Menú con línea azul que se desliza; botones suben 1px y crecen 2%; tarjetas suben 4px. El bloque del nombre en la Home recibe una luz azul tenue (16% de opacidad) desde la esquina inferior izquierda, con fundido de 0,7s.
 - **miniatura de Instagram**: tarjeta de perfil (@ce_lisboa) con grilla de 6 imágenes y botón grande "Seguir en Instagram", en vez de un ícono con link. Hoy usa las obras de ejemplo como imágenes.
+- **frase en la pared**: "El arte no reproduce aquello que es visible, sino que hace visible aquello que no siempre lo es." en Archivo 300, a la derecha del cuadro destacado, alineada a la derecha y en tinta al 90%; aparece con fundido al final de la caminata. En celular pasa arriba del cuadro. Se probó una foto de sala como fondo y se descartó: el fondo sigue siendo la pared arena/crema con degradado.
+- **retrato**: foto circular de 46px junto al nombre en el encabezado (`assets/cecilia-retrato.jpg`).
 - **recorrido guiado**: 8 pasos con foco animado sobre la web real (`?tour=1` o botón flotante).
 
 ## Do's and Don'ts

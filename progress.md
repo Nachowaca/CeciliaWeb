@@ -15,6 +15,11 @@ Acento cambiado de rojo a azul cobalto `#1d4ed8` (contraste 6:1 AA), porque el a
 - Estado de obra: Disponible / Reservada / Vendida, editable desde el panel; bloquea la compra.
 - Hovers sutiles en menú, botones y tarjetas; luz azul tenue en el nombre de la Home; texto del inicio 4px más chico.
 - Miniatura de Instagram (@ce_lisboa) debajo del chat, con imágenes de ejemplo.
+- Retrato de Cecilia junto al nombre del encabezado.
+- Recorrido guiado ampliado a 11 pasos.
+- Limpieza de código (helper `mockHTML`, listas de marco/estado compartidas, token `--grad-ig`, retrato de 191KB a 10KB).
+- Frase en la pared de la sala, a la derecha del cuadro destacado (Archivo 300). Se probó una foto de sala como fondo y se volvió al fondo neutro arena/crema.
+- Pendiente de decidir: `assets/fondo1.jpeg` y `assets/Gemini_Generated_Image_...jpeg` (fondos de sala de 1,4MB, sin usar ni subir a git).
 
 ## Próximo
 1. Revisar celular (Home, galería, ficha, carrito, chat, tour).

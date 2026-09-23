@@ -61,6 +61,11 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .wall{position:absolute;left:-30%;right:-30%;top:-30%;bottom:22%;background:radial-gradient(ellipse 30% 55% at 50% 18%,color-mix(in srgb,#fff 55%,var(--wall)) 0%,var(--wall) 70%)}
 .base{position:absolute;left:-30%;right:-30%;bottom:22%;height:14px;background:color-mix(in srgb,var(--floor) 70%,var(--color-text))}
 .floor{position:absolute;left:-30%;right:-30%;bottom:-30%;height:52%;background:var(--floor)}
+.wall-quote{position:absolute;right:5%;top:48%;transform:translateY(-50%);width:min(22%,300px);margin:0;text-align:right;font-weight:300;font-size:clamp(13px,1.55vw,21px);line-height:1.55;letter-spacing:.01em;color:color-mix(in srgb,var(--color-text) 90%,transparent);text-wrap:balance;animation:quoteIn 2.4s ease 3s both;pointer-events:none}
+@keyframes quoteIn{from{opacity:0;transform:translateY(-46%)}to{opacity:1;transform:translateY(-50%)}}
+@media (max-width:900px){.wall-quote{right:5%;top:6%;transform:none;width:78%;font-size:clamp(12px,3.2vw,15px);animation-name:quoteInM}
+@keyframes quoteInM{from{opacity:0}to{opacity:1}}}
+@media (prefers-reduced-motion:reduce){.wall-quote{animation:none}}
 .piece{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);display:grid;grid-template-columns:auto auto;align-items:end;gap:28px}
 .frame{background:var(--frame);padding:16px;box-shadow:inset 0 0 0 2px #3a332d,inset 0 0 0 6px var(--frame),inset 0 0 0 7px #4a4038,0 22px 40px color-mix(in srgb,#2d2b2b 30%,transparent),0 4px 8px color-mix(in srgb,#2d2b2b 25%,transparent)}
 .mat{background:#faf7f1;padding:clamp(18px,2.4vw,34px);box-shadow:inset 0 2px 6px color-mix(in srgb,#000 22%,transparent)}
@@ -282,6 +287,7 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <div class="world walk" id="world">
 <div class="bob">
 <div class="wall"></div><div class="base"></div><div class="floor"></div>
+<p class="wall-quote">&ldquo;El arte no reproduce aquello que es visible, sino que hace visible aquello que no siempre lo es.&rdquo;</p>
 <div class="piece">
 <div class="frame"><div class="mat"><div class="canvas"><image-slot id="obra-home" shape="rect" placeholder="Obra de Cecilia"></image-slot><img id="obraImg" style="display:none"></div></div></div>
 <div class="label"><strong id="heroArtTitle">Título de la obra</strong><span id="heroArtMeta">Óleo sobre tela<br>100 × 80 cm, 2026</span></div>
