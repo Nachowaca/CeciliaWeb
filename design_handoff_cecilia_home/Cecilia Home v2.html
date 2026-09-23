@@ -131,13 +131,13 @@ body[data-page="galeria"] .gallery-page{display:block}
 .gcard:nth-child(4){animation-delay:.18s}
 .gcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
 .mock{position:relative;aspect-ratio:1;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 30%,#fbf9f5,#e9e3d8)}
-.mock-f{position:absolute;top:11%;bottom:11%;left:50%;transform:translateX(-50%);aspect-ratio:4/5;padding:5%;box-shadow:0 14px 22px rgba(45,43,43,.28),0 3px 6px rgba(45,43,43,.2);transition:transform .35s var(--bounce)}
+.mock-f{position:absolute;top:6%;bottom:6%;left:50%;transform:translateX(-50%);aspect-ratio:4/5;padding:2.6%;box-shadow:0 14px 22px rgba(45,43,43,.28),0 3px 6px rgba(45,43,43,.2);transition:transform .35s var(--bounce)}
 .gcard:hover .mock-f{transform:translate(-50%,-5px) scale(1.025);box-shadow:0 20px 28px rgba(45,43,43,.3),0 4px 8px rgba(45,43,43,.2)}
 .chip{position:absolute;top:12px;left:12px;z-index:2;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:999px;color:#fff}
 .chip.st-reservada{background:#b45309}
 .chip.st-vendida{background:var(--color-text)}
 .buy-btn:disabled,.buy-btn:disabled:hover{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;background:transparent}
-.mock-mat{width:100%;height:100%;background:#fbf9f4;padding:9%;box-shadow:inset 0 2px 5px rgba(0,0,0,.2)}
+.mock-mat{width:100%;height:100%;background:#fbf9f4;padding:5%;box-shadow:inset 0 2px 5px rgba(0,0,0,.2)}
 .mock-mat img{width:100%;height:100%;object-fit:cover;display:block}
 .m-madera .mock-f{background:linear-gradient(135deg,#a0602e,#7a4420 60%,#8f5628)}
 .m-negro .mock-f{background:linear-gradient(135deg,#34302c,#181614)}
@@ -145,7 +145,7 @@ body[data-page="galeria"] .gallery-page{display:block}
 .m-sin .mock-f{padding:0;background:none}
 .m-sin .mock-mat{padding:0;background:none;box-shadow:none}
 .m-mesa{background:linear-gradient(#f4f1ea 0 76%,#c9a373 76%)}
-.m-mesa .mock-f{top:14%;bottom:24%;background:linear-gradient(135deg,#a0602e,#7a4420 60%,#8f5628);box-shadow:0 10px 12px -4px rgba(45,43,43,.35)}
+.m-mesa .mock-f{top:8%;bottom:23%;background:linear-gradient(135deg,#a0602e,#7a4420 60%,#8f5628);box-shadow:0 10px 12px -4px rgba(45,43,43,.35)}
 .gcard figcaption{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);font-size:13px;font-weight:600}
 .gcard-actions{display:flex;gap:8px;flex-wrap:wrap}
 .gcard-actions .btn{flex:1;padding:8px 12px;font-size:12px;border-radius:999px;white-space:nowrap}
@@ -173,6 +173,24 @@ footer ul button:hover{color:var(--color-accent);transform:translateX(4px)}
 .chat-info h2{font-size:clamp(22px,2.4vw,30px);letter-spacing:-.02em;margin:6px 0 10px}
 .chat-info p{color:var(--color-neutral-700);font-size:14.5px;line-height:1.6;max-width:44ch}
 @media (max-width:800px){.chat-section{grid-template-columns:1fr}}
+.ig-section{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:var(--space-8);align-items:center;margin:var(--space-8) 0 var(--space-6)}
+.ig-section h2{font-size:clamp(22px,2.4vw,30px);letter-spacing:-.02em;margin:6px 0 10px}
+.ig-section p{color:var(--color-neutral-700);font-size:14.5px;line-height:1.6;max-width:44ch}
+.ig-card{background:#fff;border:1px solid var(--color-neutral-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden}
+.ig-head{display:flex;align-items:center;gap:14px;padding:var(--space-4) var(--space-6);flex-wrap:wrap}
+.ig-avatar{width:56px;height:56px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);flex:none}
+.ig-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid #fff;display:block}
+.ig-id{flex:1;min-width:140px}
+.ig-id b{display:block;font-size:16px}
+.ig-id span{font-size:13px;color:var(--color-neutral-700)}
+.ig-follow{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);color:#fff;border-radius:999px;padding:12px 20px;font-size:15px;text-decoration:none}
+.ig-follow:hover{color:#fff}
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.ig-grid a{position:relative;aspect-ratio:1;overflow:hidden;display:block}
+.ig-grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s var(--bounce)}
+.ig-grid a:hover img{transform:scale(1.06)}
+@media (max-width:800px){.ig-section{grid-template-columns:1fr}}
+
 .chat-home{max-width:460px;margin:0;font-size:13px;background:#fff}
 .chat-home .msgs{height:130px;padding:10px}
 .chat-home .msg.bot{background:var(--color-surface)}
@@ -290,6 +308,21 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <form id="chatForm"><input id="chatIn" placeholder="Escribí tu consulta…" autocomplete="off"><button class="btn btn-primary" aria-label="Enviar"><i data-lucide="send" width="16" height="16"></i></button></form>
 </div>
 </div>
+<section class="ig-section" id="igSection" aria-label="Instagram de Cecilia">
+<div class="chat-info">
+<span class="kick" style="color:var(--color-accent)">Instagram</span>
+<h2>Mirá lo último que pintó Cecilia</h2>
+<p>Estas son sus publicaciones más recientes. Tocá el botón para seguirla en Instagram y enterarte primero de cada obra nueva.</p>
+</div>
+<div class="ig-card">
+<div class="ig-head">
+<div class="ig-avatar"><img src="assets/obra-boceto.webp" alt="Cecilia"></div>
+<div class="ig-id"><b>@ce_lisboa</b><span>Cecilia Rodríguez Lisboa</span></div>
+<a class="btn ig-follow" href="https://www.instagram.com/ce_lisboa/" target="_blank" rel="noopener"><i data-lucide="instagram" width="18" height="18"></i>Seguir en Instagram</a>
+</div>
+<div class="ig-grid" id="igGrid"></div>
+</div>
+</section>
 </div>
 <div class="gallery-page" id="galeriaPage">
 <div class="wrap gallery-head">
@@ -422,6 +455,10 @@ document.querySelectorAll('header [data-go],footer [data-go],.stub [data-go],#re
 
 // ---- obras (compartidas entre Galería y Remates) ----
 const WORKS=site.works;
+function renderIg(){
+const imgs=WORKS.map(w=>w.img);if(!imgs.length)return;
+document.getElementById('igGrid').innerHTML=Array.from({length:6},(_,i)=>`<a href="https://www.instagram.com/ce_lisboa/" target="_blank" rel="noopener" aria-label="Ver publicación en Instagram"><img loading="lazy" alt="Publicación de Cecilia" src="${imgs[i%imgs.length]}"></a>`).join('');
+}
 const ST={disponible:'Disponible',reservada:'Reservada',vendida:'Vendida'};
 const stOf=w=>w.status||'disponible';
 const chipHTML=w=>stOf(w)==='disponible'?'':`<span class="chip st-${stOf(w)}">${ST[stOf(w)]}</span>`;
@@ -478,7 +515,7 @@ grid.innerHTML=cart.map(w=>`
 </figure>`).join('');
 lucide.createIcons();
 }
-renderGallery();
+renderGallery();renderIg();
 renderListPage('talleres');
 renderListPage('clases');
 

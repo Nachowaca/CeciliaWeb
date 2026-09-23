@@ -7,9 +7,23 @@ Prototipo en `design_handoff_cecilia_home/` (HTML/CSS/JS estático, sin backend 
 Acento cambiado de rojo a azul cobalto `#1d4ed8` (contraste 6:1 AA), porque el azul es el color predilecto de Cecilia. Se agregó un recorrido guiado en la Home (botón "Recorrido guiado" / `?tour=1`) para presentarle la web.
 
 ## Hecho hoy (2026-09-23)
-Acento azul cobalto, recorrido guiado (`?tour=1`), mockups de marco elegibles, recorte guiado 4:5, ficha de obra con medidas, hovers sutiles, luz azul en el nombre y estado de obra (Disponible/Reservada/Vendida). Publicado en https://nachowaca.github.io/CeciliaWeb/
+- Acento cambiado de rojo a azul cobalto `#1d4ed8`.
+- Recorrido guiado (`?tour=1`) y publicación en GitHub Pages: https://nachowaca.github.io/CeciliaWeb/
+- Mockups de marco automáticos en Galería y Remates (madera, negro, blanco, mesa, sin marco), elegibles por obra desde el panel. Marco más fino y grande.
+- Recorte guiado 4:5 al subir obras (y fix del selector de archivo).
+- Ficha de obra (modal) con medidas opcionales.
+- Estado de obra: Disponible / Reservada / Vendida, editable desde el panel; bloquea la compra.
+- Hovers sutiles en menú, botones y tarjetas; luz azul tenue en el nombre de la Home; texto del inicio 4px más chico.
+- Miniatura de Instagram (@ce_lisboa) debajo del chat, con imágenes de ejemplo.
 
-**Próximo**: revisar celular, paleta 100% azul, tarjetas de Talleres/Clases con "Consultar", chat flotante, vista previa en el panel, filtros, feed de Instagram, accesibilidad (aviso de bajo contraste del detector), carga de imágenes.
+## Próximo
+1. Revisar celular (Home, galería, ficha, carrito, chat, tour).
+2. Paleta 100% azul (fondo, escena de museo, tonos secundarios).
+3. Talleres/Clases con tarjetas de fotos grandes y botón "Consultar".
+4. Chat como burbuja flotante; vista previa y aviso de guardado en el panel; filtros en la Galería.
+5. Miniatura de Instagram real: widget de terceros o API oficial (junto con Supabase).
+6. Accesibilidad (aviso de bajo contraste del detector), carga de imágenes.
+7. Backend Supabase, definir tipo de remate y cobro, obras reales.
 
 ## Hecho hasta ahora
 
