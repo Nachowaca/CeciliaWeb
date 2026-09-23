@@ -69,6 +69,37 @@ body{min-height:100vh;display:flex;flex-direction:column}
 body[data-page]:not([data-page="home"]) #home{display:none}
 body[data-page]:not([data-page="home"]) .stub{display:block}
 body[data-page="galeria"] #stub{display:none}
+body[data-page="remates"] #stub{display:none}
+.gallery-page#rematesPage{display:none}
+body[data-page="remates"] .gallery-page#rematesPage{display:block}
+.gcard-price{font-weight:800;color:var(--color-accent);font-size:15px}
+.gcard .order-btn{background:var(--color-text);color:var(--color-bg);border-color:var(--color-text)}
+.gcard .order-btn:hover{background:#000}
+/* cart */
+.cart-btn{position:relative;padding:9px 10px}
+.cart-badge{position:absolute;top:-6px;right:-6px;background:var(--color-accent);color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 4px;animation:popIn .3s var(--bounce) both}
+.cart-badge[hidden]{display:none}
+.cart-overlay{position:fixed;inset:0;background:color-mix(in srgb,var(--color-text) 40%,transparent);z-index:60;display:none;opacity:0;transition:opacity .25s}
+.cart-overlay.open{display:block;opacity:1}
+.cart-panel{position:fixed;top:0;right:0;height:100%;width:min(400px,92vw);background:#fff;box-shadow:-14px 0 40px rgba(45,43,43,.22);display:flex;flex-direction:column;transform:translateX(105%);transition:transform .35s var(--bounce)}
+.cart-overlay.open .cart-panel{transform:translateX(0)}
+.cart-panel-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:2px solid var(--color-divider);font-weight:800;font-size:15px}
+.cart-panel-head .btn{padding:6px;border-radius:999px}
+.cart-items{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.cart-empty{color:var(--color-neutral-700);font-size:14px;text-align:center;margin-top:40px}
+.cart-item{display:flex;align-items:center;gap:12px;border:1.5px solid var(--color-divider);border-radius:var(--radius-md);padding:10px;animation:popIn .3s var(--bounce) both}
+.cart-item img{width:48px;height:60px;object-fit:cover;border-radius:8px;flex:none}
+.cart-item .ci-info{flex:1;display:flex;flex-direction:column;gap:2px}
+.cart-item .ci-title{font-weight:700;font-size:13.5px}
+.cart-item .ci-price{font-size:12.5px;color:var(--color-accent);font-weight:800}
+.cart-item .ci-remove{background:none;border:0;cursor:pointer;color:var(--color-neutral-600);padding:4px}
+.cart-item .ci-remove:hover{color:var(--color-accent)}
+.cart-foot{border-top:2px solid var(--color-divider);padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.cart-total{display:flex;justify-content:space-between;font-weight:800;font-size:15px}
+.order-form{display:flex;flex-direction:column;gap:8px}
+.order-form input{padding:9px 12px;font:inherit;font-size:13.5px;border:1.5px solid var(--color-divider);border-radius:var(--radius-sm);background:var(--color-surface)}
+.order-form input:focus-visible{outline:none;border-color:var(--color-accent)}
+.order-success{background:var(--color-accent-100);color:var(--color-accent-800);padding:12px 14px;border-radius:var(--radius-md);font-size:13.5px;font-weight:700;text-align:center}
 #home{animation:popIn .5s var(--bounce) both}
 /* gallery */
 .gallery-page{display:none;background:#fff;margin:0 calc(-1 * var(--space-8));padding:var(--space-8) var(--space-8) calc(var(--space-8) * 1.5)}
@@ -160,9 +191,20 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <button data-go="talleres">Talleres</button>
 <button data-go="clases">Clases</button>
 <button class="btn btn-primary" data-go="remates"><i data-lucide="gavel" width="16" height="16"></i>Remates</button>
+<button class="btn btn-secondary cart-btn" id="cartBtn" aria-label="Ver carrito"><i data-lucide="shopping-bag" width="16" height="16"></i><span class="cart-badge" id="cartBadge" hidden>0</span></button>
 </nav>
 </div>
 </header>
+<div class="cart-overlay" id="cartOverlay">
+<div class="cart-panel" role="dialog" aria-label="Tu pedido">
+<div class="cart-panel-head">
+<span>Tu pedido</span>
+<button class="btn btn-secondary" id="cartClose" aria-label="Cerrar"><i data-lucide="x" width="16" height="16"></i></button>
+</div>
+<div class="cart-items" id="cartItems"></div>
+<div class="cart-foot" id="cartFoot"></div>
+</div>
+</div>
 <main>
 <div class="wrap" id="home">
 <section class="artist" aria-label="Datos de la artista">
@@ -209,48 +251,15 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <h2>Galería</h2>
 <p>Las últimas obras de Cecilia. Elegí una y compartila directo en Instagram.</p>
 </div>
-<div class="wrap gallery-grid" id="galleryGrid">
-<figure class="gcard">
-<img loading="lazy" alt="Obra de Cecilia 1" src="https://picsum.photos/id/1025/700/700">
-<figcaption>
-<span>Sin título I · Óleo sobre tela</span>
-<div class="gcard-actions">
-<button class="btn btn-primary ig-btn" data-obra="1"><i data-lucide="instagram" width="16" height="16"></i>Postear</button>
-<button class="btn btn-secondary buy-btn" data-go="remates" data-obra="1"><i data-lucide="gavel" width="16" height="16"></i>Comprar</button>
+<div class="wrap gallery-grid" id="galleryGrid"></div>
 </div>
-</figcaption>
-</figure>
-<figure class="gcard">
-<img loading="lazy" alt="Obra de Cecilia 2" src="https://picsum.photos/id/1041/700/700">
-<figcaption>
-<span>Sin título II · Óleo sobre tela</span>
-<div class="gcard-actions">
-<button class="btn btn-primary ig-btn" data-obra="2"><i data-lucide="instagram" width="16" height="16"></i>Postear</button>
-<button class="btn btn-secondary buy-btn" data-go="remates" data-obra="2"><i data-lucide="gavel" width="16" height="16"></i>Comprar</button>
+<div class="gallery-page" id="rematesPage">
+<div class="wrap gallery-head">
+<span class="kick" style="color:var(--color-accent)">Sección</span>
+<h2>Remates</h2>
+<p>Elegí una obra y hacé el pedido. Cecilia te contacta para coordinar el pago y la entrega.</p>
 </div>
-</figcaption>
-</figure>
-<figure class="gcard">
-<img loading="lazy" alt="Obra de Cecilia 3" src="https://picsum.photos/id/1074/700/700">
-<figcaption>
-<span>Sin título III · Óleo sobre tela</span>
-<div class="gcard-actions">
-<button class="btn btn-primary ig-btn" data-obra="3"><i data-lucide="instagram" width="16" height="16"></i>Postear</button>
-<button class="btn btn-secondary buy-btn" data-go="remates" data-obra="3"><i data-lucide="gavel" width="16" height="16"></i>Comprar</button>
-</div>
-</figcaption>
-</figure>
-<figure class="gcard">
-<img loading="lazy" alt="Obra de Cecilia 4" src="https://picsum.photos/id/1080/700/700">
-<figcaption>
-<span>Sin título IV · Óleo sobre tela</span>
-<div class="gcard-actions">
-<button class="btn btn-primary ig-btn" data-obra="4"><i data-lucide="instagram" width="16" height="16"></i>Postear</button>
-<button class="btn btn-secondary buy-btn" data-go="remates" data-obra="4"><i data-lucide="gavel" width="16" height="16"></i>Comprar</button>
-</div>
-</figcaption>
-</figure>
-</div>
+<div class="wrap gallery-grid" id="rematesGrid"></div>
 </div>
 <div class="wrap stub" id="stub">
 <span class="kick" style="color:var(--color-accent)">Sección</span>
@@ -282,21 +291,134 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 </footer>
 <script>
 lucide.createIcons();
-const titles={talleres:'Talleres',clases:'Clases',remates:'Remates'};
+const titles={talleres:'Talleres',clases:'Clases'};
 function go(p){
 document.body.dataset.page=p;
 document.querySelectorAll('.menu [data-go]').forEach(b=>b.toggleAttribute('aria-current',b.dataset.go===p)&&b.setAttribute('aria-current','page'));
 if(p==='home')replay();
-else if(p!=='galeria')document.getElementById('stubTitle').textContent=titles[p];
+else if(titles[p])document.getElementById('stubTitle').textContent=titles[p];
 window.scrollTo({top:0,behavior:'smooth'});
 }
-document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();go(el.dataset.go)}));
-document.querySelectorAll('.ig-btn').forEach(b=>b.addEventListener('click',()=>{
-const orig=b.innerHTML;
-b.innerHTML='<i data-lucide="check" width="16" height="16"></i>¡Posteado!';
+document.querySelectorAll('header [data-go],footer [data-go],.stub [data-go]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();go(el.dataset.go)}));
+
+// ---- obras (compartidas entre Galería y Remates) ----
+const WORKS=[
+{id:'1',img:'https://picsum.photos/id/1025/700/700',title:'Sin título I',meta:'Óleo sobre tela',price:350},
+{id:'2',img:'https://picsum.photos/id/1041/700/700',title:'Sin título II',meta:'Óleo sobre tela',price:420},
+{id:'3',img:'https://picsum.photos/id/1074/700/700',title:'Sin título III',meta:'Óleo sobre tela',price:500},
+{id:'4',img:'https://picsum.photos/id/1080/700/700',title:'Sin título IV',meta:'Óleo sobre tela',price:300},
+];
+function renderGallery(){
+document.getElementById('galleryGrid').innerHTML=WORKS.map(w=>`
+<figure class="gcard">
+<img loading="lazy" alt="Obra de Cecilia — ${w.title}" src="${w.img}">
+<figcaption>
+<span>${w.title} · ${w.meta}</span>
+<span class="gcard-price">USD ${w.price}</span>
+<div class="gcard-actions">
+<button class="btn btn-primary ig-btn" data-obra="${w.id}"><i data-lucide="instagram" width="16" height="16"></i>Postear</button>
+<button class="btn btn-secondary buy-btn" data-go="remates" data-obra="${w.id}"><i data-lucide="gavel" width="16" height="16"></i>Comprar</button>
+</div>
+</figcaption>
+</figure>`).join('');
 lucide.createIcons();
-setTimeout(()=>{b.innerHTML=orig;lucide.createIcons()},1800);
-}));
+}
+function renderRemates(){
+document.getElementById('rematesGrid').innerHTML=WORKS.map(w=>`
+<figure class="gcard">
+<img loading="lazy" alt="Obra de Cecilia — ${w.title}" src="${w.img}">
+<figcaption>
+<span>${w.title} · ${w.meta}</span>
+<span class="gcard-price">USD ${w.price}</span>
+<div class="gcard-actions">
+<button class="btn btn-primary order-btn" data-obra="${w.id}"><i data-lucide="shopping-bag" width="16" height="16"></i>Hacer el pedido</button>
+</div>
+</figcaption>
+</figure>`).join('');
+lucide.createIcons();
+}
+renderGallery();
+renderRemates();
+
+document.body.addEventListener('click',e=>{
+const go_=e.target.closest('[data-go]');
+if(go_ && (go_.classList.contains('buy-btn'))){addToCart(go_.dataset.obra);go(go_.dataset.go)}
+const ig=e.target.closest('.ig-btn');
+if(ig){
+const orig=ig.innerHTML;
+ig.innerHTML='<i data-lucide="check" width="16" height="16"></i>¡Posteado!';
+lucide.createIcons();
+setTimeout(()=>{ig.innerHTML=orig;lucide.createIcons()},1800);
+}
+const order=e.target.closest('.order-btn');
+if(order){addToCart(order.dataset.obra);openCart()}
+});
+
+// ---- carrito ----
+let cart=[];
+function addToCart(id){
+if(cart.some(i=>i.id===id))return;
+const w=WORKS.find(x=>x.id===id);
+if(w)cart.push(w);
+renderCart();
+}
+function removeFromCart(id){cart=cart.filter(i=>i.id!==id);renderCart()}
+function openCart(){document.getElementById('cartOverlay').classList.add('open')}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open')}
+document.getElementById('cartBtn').onclick=openCart;
+document.getElementById('cartClose').onclick=closeCart;
+document.getElementById('cartOverlay').addEventListener('click',e=>{if(e.target.id==='cartOverlay')closeCart()});
+
+function renderCart(){
+const badge=document.getElementById('cartBadge');
+badge.textContent=cart.length;
+badge.hidden=cart.length===0;
+const items=document.getElementById('cartItems');
+if(!cart.length){items.innerHTML='<div class="cart-empty">Todavía no elegiste ninguna obra.</div>'}
+else{
+items.innerHTML=cart.map(w=>`
+<div class="cart-item">
+<img src="${w.img}" alt="${w.title}">
+<div class="ci-info"><span class="ci-title">${w.title}</span><span class="ci-price">USD ${w.price}</span></div>
+<button class="ci-remove" data-remove="${w.id}" aria-label="Quitar"><i data-lucide="x" width="16" height="16"></i></button>
+</div>`).join('');
+lucide.createIcons();
+items.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>removeFromCart(b.dataset.remove));
+}
+renderCartFoot();
+}
+function renderCartFoot(){
+const foot=document.getElementById('cartFoot');
+if(!cart.length){foot.innerHTML='';return}
+const total=cart.reduce((a,w)=>a+w.price,0);
+foot.innerHTML=`
+<div class="cart-total"><span>Total</span><span>USD ${total}</span></div>
+<button class="btn btn-primary submit-btn" id="sendOrderBtn" style="border-radius:999px;justify-content:center">Enviar pedido</button>`;
+document.getElementById('sendOrderBtn').onclick=showOrderForm;
+}
+function showOrderForm(){
+const foot=document.getElementById('cartFoot');
+const total=cart.reduce((a,w)=>a+w.price,0);
+foot.innerHTML=`
+<div class="cart-total"><span>Total</span><span>USD ${total}</span></div>
+<form class="order-form" id="orderForm">
+<input id="ordName" placeholder="Tu nombre" required>
+<input id="ordContact" placeholder="Mail o WhatsApp" required>
+<button class="btn btn-primary submit-btn" type="submit" style="border-radius:999px;justify-content:center">Confirmar pedido</button>
+</form>`;
+document.getElementById('orderForm').onsubmit=e=>{
+e.preventDefault();
+const name=document.getElementById('ordName').value.trim();
+const contact=document.getElementById('ordContact').value.trim();
+cart=[];
+const badge=document.getElementById('cartBadge');
+badge.textContent='0';badge.hidden=true;
+document.getElementById('cartItems').innerHTML='<div class="cart-empty">Todavía no elegiste ninguna obra.</div>';
+foot.innerHTML=`<div class="order-success">¡Listo, ${name.split(' ')[0]}! Le avisamos a Cecilia y te va a escribir a ${contact} para coordinar el pago y la entrega.</div>`;
+};
+}
+renderCart();
+
 const world=document.getElementById('world');
 function replay(){world.classList.remove('walk');void world.offsetWidth;world.classList.add('walk')}
 document.getElementById('replay').onclick=replay;
@@ -320,6 +442,8 @@ function send(t){if(!t.trim())return;add(t,'me');reply(t.trim())}
 form.onsubmit=e=>{e.preventDefault();send(inp.value);inp.value=''};
 document.querySelectorAll('#quick button').forEach(b=>b.onclick=()=>send(b.textContent));
 add('Hola, soy el asistente de la galería. ¿En qué te ayudo?');
+const initial=location.hash.replace('#','');
+if(['galeria','talleres','clases','remates'].includes(initial))go(initial);
 </script>
 </body>
 </html>
