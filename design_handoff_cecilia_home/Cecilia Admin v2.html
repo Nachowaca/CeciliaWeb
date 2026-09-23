@@ -205,6 +205,10 @@ Ingresar con Google
 <label for="fTitle">Título de la obra</label>
 <input id="fTitle" placeholder="Ej: Atardecer en el Cerro" required>
 </div>
+<div class="field">
+<label for="fFrame">Cómo se muestra en la Galería</label>
+<select id="fFrame" class="input"><option value="madera">Marco de madera</option><option value="negro">Marco negro</option><option value="blanco">Marco blanco</option><option value="mesa">Sobre una mesa</option><option value="sin">Sin marco</option></select>
+</div>
 <div class="row2">
 <div class="field">
 <label for="fTechnique">Técnica</label>
@@ -343,9 +347,11 @@ ${w.id===highlightId?'<span class="wtag">Nueva</span>':''}
 <span class="wtitle">${w.title}</span>
 <span class="wmeta">${w.technique}</span>
 <span class="wprice">USD ${w.price}</span>
+<select class="input wframe" data-frame="${w.id}" aria-label="Marco">${[['madera','Marco de madera'],['negro','Marco negro'],['blanco','Marco blanco'],['mesa','Sobre una mesa'],['sin','Sin marco']].map(([v,t])=>`<option value="${v}" ${(w.frame||'madera')===v?'selected':''}>${t}</option>`).join('')}</select>
 </div>
 </div>`).join('');
 lucide.createIcons();
+list.querySelectorAll('[data-frame]').forEach(sel=>sel.onchange=()=>{const w=site.works.find(x=>x.id===sel.dataset.frame);w.frame=sel.value;saveStore()});
 list.querySelectorAll('[data-del-work]').forEach(b=>b.onclick=()=>{
 if(!confirm('¿Eliminar esta obra de la Galería?'))return;
 site.works=site.works.filter(w=>w.id!==b.dataset.delWork);
@@ -358,7 +364,7 @@ const title=document.getElementById('fTitle').value.trim()||'Sin título';
 const technique=document.getElementById('fTechnique').value.trim()||'Óleo sobre tela';
 const price=document.getElementById('fPrice').value.trim()||'0';
 const id=uid('w');
-site.works=[{id,img:pendingImg||'https://picsum.photos/500/625?random='+Date.now(),title,technique,price},...site.works];
+site.works=[{id,img:pendingImg||'https://picsum.photos/500/625?random='+Date.now(),title,technique,price,frame:document.getElementById('fFrame').value},...site.works];
 saveStore();
 renderWorks(id);
 toast('toast');
