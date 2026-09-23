@@ -1,4 +1,7 @@
 ---
+# ⚠️ PENDIENTE PARA MAÑANA: Cecilia usa mayormente azul en sus obras.
+# Evaluar cambiar --color-accent de rojo (#c92509) a un azul antes de seguir
+# ajustando cosas que dependen del color (contraste, botones, etc.).
 name: Cecilia Rodríguez Lisboa — Galería y Remates
 description: Galería instagrameable + remates de obra, sistema Modernist evolucionado con más color y movimiento
 colors:

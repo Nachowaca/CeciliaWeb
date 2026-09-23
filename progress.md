@@ -3,6 +3,9 @@
 Repo: https://github.com/Nachowaca/CeciliaWeb
 Prototipo en `design_handoff_cecilia_home/` (HTML/CSS/JS estático, sin backend todavía).
 
+## ⚠️ Para retomar mañana — PRIMERO
+El color de acento del sitio es rojo (`#c92509` hoy, recién oscurecido para pasar contraste). Ignacio notó que **el color predilecto de Cecilia en sus obras es el azul** — evaluar cambiar el acento del sitio de rojo a un azul antes de seguir puliendo cosas que dependen del color (contraste, botones, etc.), para no repetir el trabajo de hoy sobre el rojo.
+
 ## Hecho hasta ahora
 
 ### Home (`Cecilia Home v2.html` + `styles-v2.css`)
