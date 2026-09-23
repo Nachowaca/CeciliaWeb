@@ -37,8 +37,7 @@ body{min-height:100vh;display:flex;flex-direction:column}
 /* artist box */
 .artist{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);border:2px solid var(--color-divider);border-radius:var(--radius-lg);overflow:hidden;margin-top:var(--space-8);animation:popIn .6s var(--bounce) both}
 .artist>div{padding:var(--space-6)}
-.artist .name{border-right:2px solid var(--color-divider);display:flex;flex-direction:column;justify-content:space-between;gap:var(--space-6)}
-.artist .name{position:relative;isolation:isolate}
+.artist .name{position:relative;isolation:isolate;border-right:2px solid var(--color-divider);display:flex;flex-direction:column;justify-content:space-between;gap:var(--space-6)}
 .artist .name::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 85% 120% at 15% 100%,color-mix(in srgb,var(--color-accent) 16%,transparent),color-mix(in srgb,var(--color-accent) 5%,transparent) 55%,transparent 80%);opacity:0;transition:opacity .7s ease}
 @media (hover:hover){
 .artist .name:hover::before{opacity:1}
@@ -140,6 +139,7 @@ body[data-page="galeria"] .gallery-page{display:block}
 .chip.st-reservada{background:#b45309}
 .chip.st-vendida{background:var(--color-text)}
 .buy-btn:disabled,.buy-btn:disabled:hover{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;background:transparent}
+.mock[data-ficha]{cursor:zoom-in}
 .mock-mat{width:100%;height:100%;background:#fbf9f4;padding:5%;box-shadow:inset 0 2px 5px rgba(0,0,0,.2)}
 .mock-mat img{width:100%;height:100%;object-fit:cover;display:block}
 .m-madera .mock-f{background:linear-gradient(135deg,#a0602e,#7a4420 60%,#8f5628)}
@@ -152,7 +152,7 @@ body[data-page="galeria"] .gallery-page{display:block}
 .gcard figcaption{display:flex;flex-direction:column;gap:var(--space-3);padding:var(--space-4);font-size:13px;font-weight:600}
 .gcard-actions{display:flex;gap:8px;flex-wrap:wrap}
 .gcard-actions .btn{flex:1;padding:8px 12px;font-size:12px;border-radius:999px;white-space:nowrap}
-.gcard .ig-btn{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);color:#fff;border-color:transparent}
+.gcard .ig-btn{background:var(--grad-ig);color:#fff;border-color:transparent}
 .gcard .ig-btn:hover{filter:brightness(1.08)}
 .gcard .buy-btn{border-color:var(--color-accent);color:var(--color-accent)}
 .gcard .buy-btn:hover{background:var(--color-accent-100)}
@@ -181,12 +181,12 @@ footer ul button:hover{color:var(--color-accent);transform:translateX(4px)}
 .ig-section p{color:var(--color-neutral-700);font-size:14.5px;line-height:1.6;max-width:44ch}
 .ig-card{background:#fff;border:1px solid var(--color-neutral-200);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow:hidden}
 .ig-head{display:flex;align-items:center;gap:14px;padding:var(--space-4) var(--space-6);flex-wrap:wrap}
-.ig-avatar{width:56px;height:56px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);flex:none}
+.ig-avatar{width:56px;height:56px;border-radius:50%;padding:3px;background:var(--grad-ig);flex:none}
 .ig-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid #fff;display:block}
 .ig-id{flex:1;min-width:140px}
 .ig-id b{display:block;font-size:16px}
 .ig-id span{font-size:13px;color:var(--color-neutral-700)}
-.ig-follow{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);color:#fff;border-radius:999px;padding:12px 20px;font-size:15px;text-decoration:none}
+.ig-follow{background:var(--grad-ig);color:#fff;border-radius:999px;padding:12px 20px;font-size:15px;text-decoration:none}
 .ig-follow:hover{color:#fff}
 .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
 .ig-grid a{position:relative;aspect-ratio:1;overflow:hidden;display:block}
@@ -245,7 +245,7 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <body data-page="home">
 <header class="top">
 <div class="wrap">
-<a class="brand" data-go="home" tabindex="0"><img class="brand-photo" src="assets/cecilia-retrato.png" alt="Cecilia Rodríguez Lisboa"><span class="brand-txt">Cecilia<br>Rodríguez Lisboa</span></a>
+<a class="brand" data-go="home" tabindex="0"><img class="brand-photo" src="assets/cecilia-retrato.jpg" alt="Cecilia Rodríguez Lisboa"><span class="brand-txt">Cecilia<br>Rodríguez Lisboa</span></a>
 <nav class="menu" aria-label="Principal">
 <button data-go="galeria">Galería</button>
 <button data-go="talleres">Talleres</button>
@@ -398,6 +398,7 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 .ficha-ov{position:fixed;inset:0;z-index:80;background:rgba(20,24,40,.66);display:none;align-items:center;justify-content:center;padding:16px;opacity:0;transition:opacity .25s}
 .ficha-ov.on{display:flex;opacity:1}
 .ficha{position:relative;background:#fff;border-radius:var(--radius-lg);width:min(900px,100%);max-height:calc(100vh - 32px);overflow:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);box-shadow:var(--shadow-lg);animation:popIn .45s var(--bounce) both}
+#fichaMock{height:100%}
 .ficha .mock{height:100%;min-height:340px;aspect-ratio:auto}
 .ficha-info{padding:var(--space-8) var(--space-6);display:flex;flex-direction:column;gap:var(--space-4);justify-content:center}
 .ficha-info h2{font-size:clamp(24px,3vw,34px);margin:0}
@@ -407,7 +408,7 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 .ficha-price{font-size:28px;font-weight:800;color:var(--color-accent)}
 .ficha-actions{display:flex;gap:8px;flex-wrap:wrap}
 .ficha-actions .btn{border-radius:999px;padding:10px 18px}
-.ficha-actions .ig-btn{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);color:#fff;border-color:transparent}
+.ficha-actions .ig-btn{background:var(--grad-ig);color:#fff;border-color:transparent}
 .ficha-x{position:absolute;top:10px;right:10px;z-index:2;background:#fff}
 @media (max-width:700px){.ficha{grid-template-columns:1fr}.ficha .mock{min-height:0;aspect-ratio:1;height:auto}.ficha-info{padding:var(--space-6) var(--space-4)}}
 </style>
@@ -465,10 +466,11 @@ document.getElementById('igGrid').innerHTML=Array.from({length:6},(_,i)=>`<a hre
 const ST={disponible:'Disponible',reservada:'Reservada',vendida:'Vendida'};
 const stOf=w=>w.status||'disponible';
 const chipHTML=w=>stOf(w)==='disponible'?'':`<span class="chip st-${stOf(w)}">${ST[stOf(w)]}</span>`;
+const mockHTML=(w,{chip=true,lazy=true,attrs=''}={})=>`<div class="mock m-${w.frame||'madera'}"${attrs}>${chip?chipHTML(w):''}<div class="mock-f"><div class="mock-mat"><img${lazy?' loading="lazy"':''} alt="Obra de Cecilia — ${w.title}" src="${w.img}"></div></div></div>`;
 function renderGallery(){
 document.getElementById('galleryGrid').innerHTML=WORKS.map(w=>`
 <figure class="gcard">
-<div class="mock m-${w.frame||'madera'}" data-ficha="${w.id}" role="button" tabindex="0" aria-label="Ver ${w.title} en grande" style="cursor:zoom-in">${chipHTML(w)}<div class="mock-f"><div class="mock-mat"><img loading="lazy" alt="Obra de Cecilia — ${w.title}" src="${w.img}"></div></div></div>
+${mockHTML(w,{attrs:` data-ficha="${w.id}" role="button" tabindex="0" aria-label="Ver ${w.title} en grande"`})}
 <figcaption>
 <span>${w.title} · ${w.technique}</span>
 <span class="gcard-price">USD ${w.price}</span>
@@ -507,7 +509,7 @@ empty.style.display='none';
 footWrap.style.display='block';
 grid.innerHTML=cart.map(w=>`
 <figure class="gcard">
-<div class="mock m-${w.frame||'madera'}"><div class="mock-f"><div class="mock-mat"><img loading="lazy" alt="Obra de Cecilia — ${w.title}" src="${w.img}"></div></div></div>
+${mockHTML(w,{chip:false})}
 <figcaption>
 <span>${w.title} · ${w.technique}</span>
 <span class="gcard-price">USD ${w.price}</span>
@@ -542,8 +544,7 @@ document.getElementById('rematesSendBtn').onclick=()=>{openCart();showOrderForm(
 const fichaOv=document.getElementById('fichaOv');
 function openFicha(id){
 const w=WORKS.find(x=>x.id===id);if(!w)return;
-document.getElementById('fichaMock').style.height='100%';
-document.getElementById('fichaMock').innerHTML=`<div class="mock m-${w.frame||'madera'}">${chipHTML(w)}<div class="mock-f"><div class="mock-mat"><img alt="Obra de Cecilia — ${w.title}" src="${w.img}"></div></div></div>`;
+document.getElementById('fichaMock').innerHTML=mockHTML(w,{lazy:false});
 document.getElementById('fichaInfo').innerHTML=`<span class="kick" style="color:var(--color-accent)">Obra</span><h2>${w.title}</h2><dl><dt>Técnica</dt><dd>${w.technique}</dd><dt>Estado</dt><dd>${ST[stOf(w)]}</dd>${w.size?`<dt>Medidas</dt><dd>${w.size}</dd>`:''}</dl><div class="ficha-price">USD ${w.price}</div><div class="ficha-actions"><button class="btn btn-primary buy-btn" data-go="remates" data-obra="${w.id}" ${stOf(w)!=='disponible'?'disabled':''}><i data-lucide="gavel" width="16" height="16"></i>${stOf(w)==='disponible'?'Comprar':ST[stOf(w)]}</button><button class="btn btn-primary ig-btn" data-obra="${w.id}"><i data-lucide="instagram" width="16" height="16"></i>Postear en Instagram</button></div>`;
 fichaOv.classList.add('on');lucide.createIcons();
 }
@@ -710,7 +711,7 @@ tip.querySelector('#tSkip').onclick=end;
 const pv=tip.querySelector('#tPrev'),nx=tip.querySelector('#tNext');
 if(pv)pv.onclick=()=>show(i-1);if(nx)nx.onclick=()=>show(i+1);
 place();setTimeout(place,600);
-},s.p!==document.body.dataset.page?50:0);
+},0);
 }
 document.getElementById('tourFab').addEventListener('click',()=>show(0));
 document.addEventListener('keydown',e=>{if(i<0)return;if(e.key==='Escape')end();if(e.key==='ArrowRight'&&i<S.length-1)show(i+1);if(e.key==='ArrowLeft'&&i>0)show(i-1)});

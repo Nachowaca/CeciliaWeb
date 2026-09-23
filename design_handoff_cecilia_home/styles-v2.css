@@ -57,6 +57,7 @@
   --radius-lg: 24px;
 
   --bounce: cubic-bezier(.34,1.56,.64,1);
+  --grad-ig: linear-gradient(135deg,#f58529,#dd2a7b,#8134af);
 
   /* Elevation — derived from the ground: soft ink-tinted shadows on a
      light theme, a hairline edge + ambient darkness on a dark one. */

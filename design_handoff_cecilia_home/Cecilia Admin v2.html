@@ -207,7 +207,7 @@ Ingresar con Google
 </div>
 <div class="field">
 <label for="fFrame">Cómo se muestra en la Galería</label>
-<select id="fFrame" class="input"><option value="madera">Marco de madera</option><option value="negro">Marco negro</option><option value="blanco">Marco blanco</option><option value="mesa">Sobre una mesa</option><option value="sin">Sin marco</option></select>
+<select id="fFrame" class="input"></select>
 </div>
 <div class="row2">
 <div class="field">
@@ -221,7 +221,7 @@ Ingresar con Google
 </div>
 <div class="field">
 <label for="fStatus">Estado</label>
-<select id="fStatus" class="input"><option value="disponible">Disponible</option><option value="reservada">Reservada</option><option value="vendida">Vendida</option></select>
+<select id="fStatus" class="input"></select>
 </div>
 <div class="field">
 <label for="fSize">Medidas (opcional)</label>
@@ -387,6 +387,11 @@ setWork(c.toDataURL('image/jpeg',.88));
 };
 
 
+const STATUSES=[['disponible','Disponible'],['reservada','Reservada'],['vendida','Vendida']];
+const FRAMES=[['madera','Marco de madera'],['negro','Marco negro'],['blanco','Marco blanco'],['mesa','Sobre una mesa'],['sin','Sin marco']];
+const opts=(list,cur)=>list.map(([v,t])=>`<option value="${v}"${v===cur?' selected':''}>${t}</option>`).join('');
+document.getElementById('fFrame').innerHTML=opts(FRAMES,'madera');
+document.getElementById('fStatus').innerHTML=opts(STATUSES,'disponible');
 function renderWorks(highlightId){
 document.getElementById('workCount').textContent=site.works.length;
 const list=document.getElementById('workList');
@@ -400,13 +405,12 @@ ${w.id===highlightId?'<span class="wtag">Nueva</span>':''}
 <span class="wtitle">${w.title}</span>
 <span class="wmeta">${w.technique}</span>
 <span class="wprice">USD ${w.price}</span>
-<select class="input wframe" data-status="${w.id}" aria-label="Estado">${[['disponible','Disponible'],['reservada','Reservada'],['vendida','Vendida']].map(([v,t])=>`<option value="${v}" ${(w.status||'disponible')===v?'selected':''}>${t}</option>`).join('')}</select>
-<select class="input wframe" data-frame="${w.id}" aria-label="Marco">${[['madera','Marco de madera'],['negro','Marco negro'],['blanco','Marco blanco'],['mesa','Sobre una mesa'],['sin','Sin marco']].map(([v,t])=>`<option value="${v}" ${(w.frame||'madera')===v?'selected':''}>${t}</option>`).join('')}</select>
+<select class="input wframe" data-w="${w.id}" data-k="status" aria-label="Estado">${opts(STATUSES,w.status||'disponible')}</select>
+<select class="input wframe" data-w="${w.id}" data-k="frame" aria-label="Marco">${opts(FRAMES,w.frame||'madera')}</select>
 </div>
 </div>`).join('');
 lucide.createIcons();
-list.querySelectorAll('[data-status]').forEach(sel=>sel.onchange=()=>{const w=site.works.find(x=>x.id===sel.dataset.status);w.status=sel.value;saveStore()});
-list.querySelectorAll('[data-frame]').forEach(sel=>sel.onchange=()=>{const w=site.works.find(x=>x.id===sel.dataset.frame);w.frame=sel.value;saveStore()});
+list.onchange=e=>{const sel=e.target.closest('[data-k]');if(!sel)return;site.works.find(x=>x.id===sel.dataset.w)[sel.dataset.k]=sel.value;saveStore()};
 list.querySelectorAll('[data-del-work]').forEach(b=>b.onclick=()=>{
 if(!confirm('¿Eliminar esta obra de la Galería?'))return;
 site.works=site.works.filter(w=>w.id!==b.dataset.delWork);
