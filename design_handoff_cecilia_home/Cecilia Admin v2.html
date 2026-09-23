@@ -199,8 +199,8 @@ Ingresar con Google
 <label class="dropzone" id="dropzone">
 <i data-lucide="image-plus" width="28" height="28"></i>
 <span>Arrastrá una imagen o hacé clic para elegirla</span>
-<input type="file" id="fileInput" accept="image/*" hidden>
 </label>
+<input type="file" id="fileInput" accept="image/*" hidden>
 <div class="field">
 <label for="fTitle">Título de la obra</label>
 <input id="fTitle" placeholder="Ej: Atardecer en el Cerro" required>
@@ -250,6 +250,19 @@ Ingresar con Google
 <div class="note"><i data-lucide="sparkles" width="14" height="14"></i>Diseño de muestra — guarda en este navegador. La versión final se conecta a una base de datos real.</div>
 </div>
 </main>
+<style>
+.crop-ov{position:fixed;inset:0;z-index:100;background:rgba(20,24,40,.7);display:none;align-items:center;justify-content:center;padding:16px}
+.crop-ov.on{display:flex}
+.crop-box{background:#fff;border-radius:var(--radius-lg);padding:20px;width:min(380px,100%);box-shadow:var(--shadow-lg)}
+.crop-box h3{font-size:19px;margin:0 0 4px}
+.crop-box p{font-size:13px;color:var(--color-neutral-700);margin:0 0 12px}
+.crop-view{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:#222;border-radius:var(--radius-md);touch-action:none;cursor:grab}
+.crop-view img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;user-select:none;-webkit-user-drag:none}
+.crop-view::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 2px #fff;background:linear-gradient(#fff3 1px,transparent 1px) 0 33.3%/100% 33.3%,linear-gradient(90deg,#fff3 1px,transparent 1px) 33.3% 0/33.3% 100%}
+.crop-zoom{width:100%;margin:12px 0}
+.crop-row{display:flex;gap:8px;justify-content:flex-end}
+</style>
+<div class="crop-ov" id="cropOv"><div class="crop-box" role="dialog" aria-label="Recortar obra"><h3>Encuadrá tu obra</h3><p>Arrastrá la foto y usá el zoom para dejar solo la obra, sin marco ni fondo.</p><div class="crop-view" id="cropView"><img id="cropImg" alt=""></div><input type="range" class="crop-zoom" id="cropZoom" min="1" max="4" step="0.01" value="1" aria-label="Zoom"><div class="crop-row"><button type="button" class="btn btn-secondary" id="cropFull">Usar foto completa</button><button type="button" class="btn btn-primary" id="cropOk">Recortar</button></div></div></div>
 <script>
 lucide.createIcons();
 
@@ -330,9 +343,41 @@ const dz=document.getElementById('dropzone');
 let pendingImg=null;
 document.getElementById('fileInput').addEventListener('change',e=>{
 const f=e.target.files[0];if(!f)return;
-fileToDataURL(f,url=>{pendingImg=url;dz.classList.add('has-img');dz.innerHTML=`<img src="${url}">`});
+fileToDataURL(f,url=>{e.target.value='';openCrop(url)});
 });
-dz.addEventListener('click',()=>document.getElementById('fileInput').click());
+dz.addEventListener('click',e=>{e.preventDefault();document.getElementById('fileInput').click()});
+// ---------- RECORTE ----------
+const cropOv=document.getElementById('cropOv'),cropView=document.getElementById('cropView'),cropImg=document.getElementById('cropImg'),cropZoom=document.getElementById('cropZoom');
+let cs={x:0,y:0,base:1,z:1,url:null};
+function cropApply(){
+const vw=cropView.clientWidth,vh=cropView.clientHeight,k=cs.base*cs.z,w=cropImg.naturalWidth*k,h=cropImg.naturalHeight*k;
+cs.x=Math.min(0,Math.max(vw-w,cs.x));cs.y=Math.min(0,Math.max(vh-h,cs.y));
+cropImg.style.transform=`translate(${cs.x}px,${cs.y}px) scale(${k})`;
+}
+function openCrop(url){
+cs.url=url;cropImg.onload=()=>{
+const vw=cropView.clientWidth,vh=cropView.clientHeight;
+cs.base=Math.max(vw/cropImg.naturalWidth,vh/cropImg.naturalHeight);cs.z=1;cropZoom.value=1;
+cs.x=(vw-cropImg.naturalWidth*cs.base)/2;cs.y=(vh-cropImg.naturalHeight*cs.base)/2;cropApply();
+};
+cropImg.src=url;cropOv.classList.add('on');
+}
+function setWork(url){pendingImg=url;dz.classList.add('has-img');dz.innerHTML=`<img src="${url}">`;cropOv.classList.remove('on')}
+cropZoom.oninput=()=>{
+const vw=cropView.clientWidth,vh=cropView.clientHeight,ox=(vw/2-cs.x)/(cs.base*cs.z),oy=(vh/2-cs.y)/(cs.base*cs.z);
+cs.z=+cropZoom.value;cs.x=vw/2-ox*cs.base*cs.z;cs.y=vh/2-oy*cs.base*cs.z;cropApply();
+};
+let drag=null;
+cropView.onpointerdown=e=>{drag={x:e.clientX-cs.x,y:e.clientY-cs.y};cropView.setPointerCapture(e.pointerId);cropView.style.cursor='grabbing'};
+cropView.onpointermove=e=>{if(!drag)return;cs.x=e.clientX-drag.x;cs.y=e.clientY-drag.y;cropApply()};
+cropView.onpointerup=()=>{drag=null;cropView.style.cursor='grab'};
+document.getElementById('cropFull').onclick=()=>setWork(cs.url);
+document.getElementById('cropOk').onclick=()=>{
+const vw=cropView.clientWidth,vh=cropView.clientHeight,k=cs.base*cs.z,W=800,H=1000,c=document.createElement('canvas');c.width=W;c.height=H;
+c.getContext('2d').drawImage(cropImg,-cs.x/k,-cs.y/k,vw/k,vh/k,0,0,W,H);
+setWork(c.toDataURL('image/jpeg',.88));
+};
+
 
 function renderWorks(highlightId){
 document.getElementById('workCount').textContent=site.works.length;
