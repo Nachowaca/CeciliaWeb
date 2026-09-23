@@ -1,7 +1,4 @@
 ---
-# ⚠️ PENDIENTE PARA MAÑANA: Cecilia usa mayormente azul en sus obras.
-# Evaluar cambiar --color-accent de rojo (#1d4ed8) a un azul antes de seguir
-# ajustando cosas que dependen del color (contraste, botones, etc.).
 name: Cecilia Rodríguez Lisboa — Galería y Remates
 description: Galería instagrameable + remates de obra, sistema Modernist evolucionado con más color y movimiento
 colors:
@@ -99,6 +96,13 @@ Radios de tres tamaños: `8px` (chico, inputs/fotos), `14px` (medio, tarjetas), 
 - **chat widget**: fondo blanco (no bone, para legibilidad), burbujas con radio 14px y esquina "cola" de 4px, punto de estado con pulso animado.
 - **item-card** (panel, Talleres/Clases): cabecera con número circular en acento sobre fondo surface, cuerpo con padding generoso (32px).
 - **tabs** (panel): pills, activa = fondo tinta/texto bone.
+
+- **mockup de obra** (`.mock`): cada obra se muestra sola en un marco CSS sobre pared (madera, negro, blanco, sobre mesa o sin marco), elegible por obra desde el panel. Marco fino y grande para que la obra no se pierda; hover eleva el marco 5px y profundiza la sombra.
+- **ficha de obra**: modal (dos columnas, una en celular) con mockup grande, técnica, medidas opcionales, estado, precio y botones Comprar / Postear. Cierra con X, clic afuera o Esc.
+- **estado de obra**: etiqueta (`.chip`) Reservada (ámbar) o Vendida (tinta) sobre el mockup; las disponibles no llevan etiqueta. Comprar queda deshabilitado con el nombre del estado.
+- **hovers**: sutiles. Menú con línea azul que se desliza; botones suben 1px y crecen 2%; tarjetas suben 4px. El bloque del nombre en la Home recibe una luz azul tenue (16% de opacidad) desde la esquina inferior izquierda, con fundido de 0,7s.
+- **miniatura de Instagram**: tarjeta de perfil (@ce_lisboa) con grilla de 6 imágenes y botón grande "Seguir en Instagram", en vez de un ícono con link. Hoy usa las obras de ejemplo como imágenes.
+- **recorrido guiado**: 8 pasos con foco animado sobre la web real (`?tour=1` o botón flotante).
 
 ## Do's and Don'ts
 
