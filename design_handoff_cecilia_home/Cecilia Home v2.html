@@ -22,7 +22,8 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .brand:hover::before{width:44px}
 .menu{display:flex;align-items:center;gap:var(--space-6)}
 .menu button{font:inherit;font-size:14px;font-weight:600;background:none;border:0;padding:6px 0;cursor:pointer;color:var(--color-text);border-bottom:2px solid transparent;transition:transform .2s var(--bounce),color .15s}
-.menu button:hover{color:var(--color-accent);transform:translateY(-2px)}
+.menu button:not(.btn){background:linear-gradient(var(--color-accent),var(--color-accent)) 0 100%/0 2px no-repeat;transition:background-size .3s var(--bounce),color .2s}
+.menu button:not(.btn):hover{color:var(--color-accent);background-size:100% 2px}
 .menu button[aria-current="page"]{border-bottom-color:var(--color-text)}
 .menu .btn-primary{background:var(--color-accent);padding:10px 16px;border:0;color:var(--color-bg);display:inline-flex;gap:8px;align-items:center;border-radius:var(--radius-lg)}
 .menu .btn-primary:hover{color:var(--color-bg);background:var(--color-accent-600)}
@@ -34,6 +35,12 @@ body{min-height:100vh;display:flex;flex-direction:column}
 .artist{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);border:2px solid var(--color-divider);border-radius:var(--radius-lg);overflow:hidden;margin-top:var(--space-8);animation:popIn .6s var(--bounce) both}
 .artist>div{padding:var(--space-6)}
 .artist .name{border-right:2px solid var(--color-divider);display:flex;flex-direction:column;justify-content:space-between;gap:var(--space-6)}
+.artist .name{position:relative;isolation:isolate}
+.artist .name::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 85% 120% at 15% 100%,color-mix(in srgb,var(--color-accent) 16%,transparent),color-mix(in srgb,var(--color-accent) 5%,transparent) 55%,transparent 80%);opacity:0;transition:opacity .7s ease}
+@media (hover:hover){
+.artist .name:hover::before{opacity:1}
+}
+@media (prefers-reduced-motion:reduce){.artist .name::before{transition:none}}
 .artist h1{font-size:clamp(30px,4.2vw,60px);line-height:.98;letter-spacing:-.03em;margin:0;text-wrap:balance}
 .artist .rows{display:grid;grid-template-rows:1fr 1fr;padding:0}
 .artist .row{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;gap:var(--space-3);padding:var(--space-4) var(--space-6)}
@@ -122,10 +129,10 @@ body[data-page="galeria"] .gallery-page{display:block}
 .gcard:nth-child(2){animation-delay:.06s}
 .gcard:nth-child(3){animation-delay:.12s}
 .gcard:nth-child(4){animation-delay:.18s}
-.gcard:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:var(--shadow-lg)}
+.gcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
 .mock{position:relative;aspect-ratio:1;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 30%,#fbf9f5,#e9e3d8)}
 .mock-f{position:absolute;top:11%;bottom:11%;left:50%;transform:translateX(-50%);aspect-ratio:4/5;padding:5%;box-shadow:0 14px 22px rgba(45,43,43,.28),0 3px 6px rgba(45,43,43,.2);transition:transform .35s var(--bounce)}
-.gcard:hover .mock-f{transform:translateX(-50%) scale(1.04)}
+.gcard:hover .mock-f{transform:translate(-50%,-5px) scale(1.025);box-shadow:0 20px 28px rgba(45,43,43,.3),0 4px 8px rgba(45,43,43,.2)}
 .mock-mat{width:100%;height:100%;background:#fbf9f4;padding:9%;box-shadow:inset 0 2px 5px rgba(0,0,0,.2)}
 .mock-mat img{width:100%;height:100%;object-fit:cover;display:block}
 .m-madera .mock-f{background:linear-gradient(135deg,#a0602e,#7a4420 60%,#8f5628)}
@@ -347,6 +354,24 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 </div>
 <div class="legal"><div class="wrap"><span>© 2026 Cecilia Rodríguez Lisboa</span><span>Galería y remates de obra</span></div></div>
 </footer>
+<style>
+.ficha-ov{position:fixed;inset:0;z-index:80;background:rgba(20,24,40,.66);display:none;align-items:center;justify-content:center;padding:16px;opacity:0;transition:opacity .25s}
+.ficha-ov.on{display:flex;opacity:1}
+.ficha{position:relative;background:#fff;border-radius:var(--radius-lg);width:min(900px,100%);max-height:calc(100vh - 32px);overflow:auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);box-shadow:var(--shadow-lg);animation:popIn .45s var(--bounce) both}
+.ficha .mock{height:100%;min-height:340px;aspect-ratio:auto}
+.ficha-info{padding:var(--space-8) var(--space-6);display:flex;flex-direction:column;gap:var(--space-4);justify-content:center}
+.ficha-info h2{font-size:clamp(24px,3vw,34px);margin:0}
+.ficha-info dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:14px}
+.ficha-info dt{color:var(--color-neutral-700);font-weight:600}
+.ficha-info dd{margin:0}
+.ficha-price{font-size:28px;font-weight:800;color:var(--color-accent)}
+.ficha-actions{display:flex;gap:8px;flex-wrap:wrap}
+.ficha-actions .btn{border-radius:999px;padding:10px 18px}
+.ficha-actions .ig-btn{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);color:#fff;border-color:transparent}
+.ficha-x{position:absolute;top:10px;right:10px;z-index:2;background:#fff}
+@media (max-width:700px){.ficha{grid-template-columns:1fr}.ficha .mock{min-height:0;aspect-ratio:1;height:auto}.ficha-info{padding:var(--space-6) var(--space-4)}}
+</style>
+<div class="ficha-ov" id="fichaOv"><div class="ficha" role="dialog" aria-label="Detalle de la obra"><button class="btn btn-secondary ficha-x" id="fichaX" aria-label="Cerrar"><i data-lucide="x" width="16" height="16"></i></button><div id="fichaMock"></div><div class="ficha-info" id="fichaInfo"></div></div></div>
 <script>
 lucide.createIcons();
 
@@ -396,7 +421,7 @@ const WORKS=site.works;
 function renderGallery(){
 document.getElementById('galleryGrid').innerHTML=WORKS.map(w=>`
 <figure class="gcard">
-<div class="mock m-${w.frame||'madera'}"><div class="mock-f"><div class="mock-mat"><img loading="lazy" alt="Obra de Cecilia — ${w.title}" src="${w.img}"></div></div></div>
+<div class="mock m-${w.frame||'madera'}" data-ficha="${w.id}" role="button" tabindex="0" aria-label="Ver ${w.title} en grande" style="cursor:zoom-in"><div class="mock-f"><div class="mock-mat"><img loading="lazy" alt="Obra de Cecilia — ${w.title}" src="${w.img}"></div></div></div>
 <figcaption>
 <span>${w.title} · ${w.technique}</span>
 <span class="gcard-price">USD ${w.price}</span>
@@ -464,6 +489,28 @@ const remove=e.target.closest('.remove-btn');
 if(remove){removeFromCart(remove.dataset.obra)}
 });
 document.getElementById('rematesSendBtn').onclick=()=>{openCart();showOrderForm()};
+
+
+// ---- ficha de obra ----
+const fichaOv=document.getElementById('fichaOv');
+function openFicha(id){
+const w=WORKS.find(x=>x.id===id);if(!w)return;
+document.getElementById('fichaMock').style.height='100%';
+document.getElementById('fichaMock').innerHTML=`<div class="mock m-${w.frame||'madera'}"><div class="mock-f"><div class="mock-mat"><img alt="Obra de Cecilia — ${w.title}" src="${w.img}"></div></div></div>`;
+document.getElementById('fichaInfo').innerHTML=`<span class="kick" style="color:var(--color-accent)">Obra</span><h2>${w.title}</h2><dl><dt>Técnica</dt><dd>${w.technique}</dd>${w.size?`<dt>Medidas</dt><dd>${w.size}</dd>`:''}</dl><div class="ficha-price">USD ${w.price}</div><div class="ficha-actions"><button class="btn btn-primary buy-btn" data-go="remates" data-obra="${w.id}"><i data-lucide="gavel" width="16" height="16"></i>Comprar</button><button class="btn btn-primary ig-btn" data-obra="${w.id}"><i data-lucide="instagram" width="16" height="16"></i>Postear en Instagram</button></div>`;
+fichaOv.classList.add('on');lucide.createIcons();
+}
+function closeFicha(){fichaOv.classList.remove('on')}
+document.body.addEventListener('click',e=>{
+const m=e.target.closest('[data-ficha]');if(m)return openFicha(m.dataset.ficha);
+if(e.target.closest('#fichaOv .buy-btn'))closeFicha();
+});
+document.body.addEventListener('keydown',e=>{
+if(e.key==='Escape')closeFicha();
+if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-ficha]')){e.preventDefault();openFicha(e.target.dataset.ficha)}
+});
+document.getElementById('fichaX').onclick=closeFicha;
+fichaOv.addEventListener('click',e=>{if(e.target===fichaOv)closeFicha()});
 
 // ---- carrito ----
 let cart=[];

@@ -219,6 +219,10 @@ Ingresar con Google
 <input id="fPrice" placeholder="350">
 </div>
 </div>
+<div class="field">
+<label for="fSize">Medidas (opcional)</label>
+<input id="fSize" placeholder="Ej: 40 × 50 cm">
+</div>
 <button class="btn btn-primary submit-btn" type="submit"><i data-lucide="upload" width="16" height="16"></i>Publicar en la Galería</button>
 <div class="toast" id="toast"><i data-lucide="check-circle-2" width="16" height="16"></i>¡Listo! Ya está publicada en tu Galería.</div>
 </form>
@@ -409,7 +413,7 @@ const title=document.getElementById('fTitle').value.trim()||'Sin título';
 const technique=document.getElementById('fTechnique').value.trim()||'Óleo sobre tela';
 const price=document.getElementById('fPrice').value.trim()||'0';
 const id=uid('w');
-site.works=[{id,img:pendingImg||'https://picsum.photos/500/625?random='+Date.now(),title,technique,price,frame:document.getElementById('fFrame').value},...site.works];
+site.works=[{id,img:pendingImg||'https://picsum.photos/500/625?random='+Date.now(),title,technique,price,size:document.getElementById('fSize').value.trim(),frame:document.getElementById('fFrame').value},...site.works];
 saveStore();
 renderWorks(id);
 toast('toast');
