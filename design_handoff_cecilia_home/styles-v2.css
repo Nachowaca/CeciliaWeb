@@ -5,8 +5,8 @@
   --color-bg: #f3f2f2;
   --color-surface: #eae9e9;
   --color-text: #201e1d;
-  --color-accent: #c92509;
-  --color-accent-2: #e15b47;
+  --color-accent: #1d4ed8;
+  --color-accent-2: #0ea5e9;
   --color-divider: color-mix(in srgb, #201e1d 40%, transparent);
 
   /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
@@ -21,17 +21,17 @@
   --color-neutral-800: #444141;
   --color-neutral-900: #2d2b2b;
 
-  --color-accent-100: #fff2ef;
-  --color-accent-200: #ffe0d9;
-  --color-accent-300: #ffc4b8;
-  --color-accent-400: #ff9783;
-  --color-accent-500: #ff563c;
-  --color-accent-600: #ae1800;
-  --color-accent-700: #7c1405;
-  --color-accent-800: #7c1405;
-  --color-accent-900: #4d170e;
+  --color-accent-100: #eff4ff;
+  --color-accent-200: #dbe6fe;
+  --color-accent-300: #bfd3fe;
+  --color-accent-400: #8fb0fb;
+  --color-accent-500: #4f7cf0;
+  --color-accent-600: #1e40af;
+  --color-accent-700: #1e3a8a;
+  --color-accent-800: #1e3a8a;
+  --color-accent-900: #172554;
 
-  --color-accent-2-100: #fff2ef;
+  --color-accent-2-100: #f0f9ff;
   --color-accent-2-200: #ffe0da;
   --color-accent-2-300: #ffc4b9;
   --color-accent-2-400: #ff9784;

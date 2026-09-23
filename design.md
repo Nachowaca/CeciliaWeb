@@ -1,6 +1,6 @@
 ---
 # ⚠️ PENDIENTE PARA MAÑANA: Cecilia usa mayormente azul en sus obras.
-# Evaluar cambiar --color-accent de rojo (#c92509) a un azul antes de seguir
+# Evaluar cambiar --color-accent de rojo (#1d4ed8) a un azul antes de seguir
 # ajustando cosas que dependen del color (contraste, botones, etc.).
 name: Cecilia Rodríguez Lisboa — Galería y Remates
 description: Galería instagrameable + remates de obra, sistema Modernist evolucionado con más color y movimiento
@@ -8,7 +8,7 @@ colors:
   bg: "#f5f0e8"
   surface: "#ece5da"
   text: "#201e1d"
-  accent: "#c92509"
+  accent: "#1d4ed8"
   accent-hover: "#ae1800"
   accent-pressed: "#7c1405"
   accent-tint: "#fff2ef"
@@ -70,7 +70,7 @@ Sistema visual **Modernist evolucionado**: sobre la base plana/arquitectónica o
 
 ## Colors
 
-Fondo bone (`#f5f0e8`) y superficie tostada (`#ece5da`) sobre tinta casi negra (`#201e1d`). Un solo acento: rojo `#c92509`, con su rampa de hover/pressed/tint/deep. Los divisores usan tinta al 40% de opacidad, nunca gris plano. La escena de museo tiene su propia paleta física (pared, piso, marco) que no se mezcla con el resto del sitio.
+Fondo bone (`#f5f0e8`) y superficie tostada (`#ece5da`) sobre tinta casi negra (`#201e1d`). Un solo acento: azul cobalto `#1d4ed8`, con su rampa de hover/pressed/tint/deep. Los divisores usan tinta al 40% de opacidad, nunca gris plano. La escena de museo tiene su propia paleta física (pared, piso, marco) que no se mezcla con el resto del sitio.
 
 ## Typography
 
@@ -102,5 +102,5 @@ Radios de tres tamaños: `8px` (chico, inputs/fotos), `14px` (medio, tarjetas), 
 
 ## Do's and Don'ts
 
-- **Hacer**: rebote (`--bounce`) en toda transición interactiva; kickers en mayúscula con tracking positivo; un solo acento (rojo) para toda acción primaria.
+- **Hacer**: rebote (`--bounce`) en toda transición interactiva; kickers en mayúscula con tracking positivo; un solo acento (azul cobalto) para toda acción primaria.
 - **No hacer**: no usar gris plano para texto (siempre tinta con opacidad); no mezclar radios del Modernist original (0) con el sistema actual; no usar otra tipografía además de Archivo; no prometer visualmente algo simulado (pagos, Instagram real) sin dejarlo claro en el copy.
