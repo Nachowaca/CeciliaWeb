@@ -1,43 +1,103 @@
-# Design Brief — Web Cecilia Rodríguez Lisboa
+---
+name: Cecilia Rodríguez Lisboa — Galería y Remates
+description: Galería instagrameable + remates de obra, sistema Modernist evolucionado con más color y movimiento
+colors:
+  bg: "#f5f0e8"
+  surface: "#ece5da"
+  text: "#201e1d"
+  accent: "#c92509"
+  accent-hover: "#ae1800"
+  accent-pressed: "#7c1405"
+  accent-tint: "#fff2ef"
+  accent-deep: "#7c1405"
+  divider: "color-mix(in srgb, #201e1d 40%, transparent)"
+  neutral-700: "#605d5d"
+  scene-wall: "#ebe3d6"
+  scene-floor: "#cfc4b3"
+  scene-frame: "#231f1c"
+typography:
+  heading:
+    fontFamily: "Archivo, system-ui, sans-serif"
+    fontWeight: 800
+    letterSpacing: "-0.03em"
+  body:
+    fontFamily: "Archivo, system-ui, sans-serif"
+    fontWeight: 400
+    fontSize: "15px"
+    lineHeight: 1.55
+  kicker:
+    fontSize: "11px"
+    fontWeight: 600
+    letterSpacing: "0.12em"
+rounded:
+  sm: "8px"
+  md: "14px"
+  lg: "24px"
+  pill: "999px"
+spacing:
+  1: "4px"
+  2: "8px"
+  3: "12px"
+  4: "16px"
+  6: "24px"
+  8: "32px"
+components:
+  button-primary:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.bg}"
+    rounded: "{rounded.pill}"
+    padding: "10px 16px"
+  button-primary-hover:
+    backgroundColor: "{colors.accent-hover}"
+  button-secondary:
+    backgroundColor: "transparent"
+    textColor: "{colors.text}"
+    rounded: "{rounded.pill}"
+  card:
+    backgroundColor: "#ffffff"
+    rounded: "{rounded.lg}"
+    padding: "24px"
+---
 
-Galería instagrameable + remates de obras de pintura. Estilo animado, colorido y poco rígido (no el Modernist original, más juguetón: rebote, esquinas redondeadas, transiciones).
+# DESIGN.md
 
-## Home
-- Header: marca + menú (Galería, Talleres, Clases, Remates destacado)
-- Recuadro de la artista: "Artista / Profesora / Tallerista" y "Bellas Artes / Escenógrafa / Realización Teatral"
-- Escena de museo animada (caminata hacia el cuadro, 9s) — se mantiene del diseño original
-- Chat del asistente: debajo de la escena, achicado (ya no en el footer)
+## Overview
 
-## Galería
-- Fondo blanco, tipo pared de museo
-- Grilla de obras: 4 por fila en desktop, 2 en tablet, 1 en celular
-- Cada obra tiene dos acciones: **Postear en Instagram** (simulado, degradé IG) y **Comprar** (lleva a Remates)
-- Cecilia puede subir sus obras tanto desde la web (panel propio) como publicarlas directo desde Instagram
+Sistema visual **Modernist evolucionado**: sobre la base plana/arquitectónica original (Archivo, cero radios, líneas de 2px) se le sumó rebote (`cubic-bezier(.34,1.56,.64,1)`), esquinas redondeadas y color, a pedido explícito del cliente ("animado, colorido, poco rígido"). El sistema Modernist original (radios 0, sin rebote) queda documentado aparte en `design_handoff_cecilia_home/styles.css` como referencia histórica — no se edita.
 
-## Panel de Cecilia (`/admin`)
-- Login con su Gmail (Google)
-- Formulario: foto, título, técnica, medidas, año, precio
-- Al publicar, la obra aparece automáticamente en la Galería pública
+## Colors
 
-## Remates
-- Sección principal/destacada del menú
-- **Pendiente definir**: subasta con tiempo, precio fijo, o mixto — y cómo se cobra
+Fondo bone (`#f5f0e8`) y superficie tostada (`#ece5da`) sobre tinta casi negra (`#201e1d`). Un solo acento: rojo `#c92509`, con su rampa de hover/pressed/tint/deep. Los divisores usan tinta al 40% de opacidad, nunca gris plano. La escena de museo tiene su propia paleta física (pared, piso, marco) que no se mezcla con el resto del sitio.
 
-## Chatbot
-- Asiste a los visitantes: preguntas sobre remates, talleres/clases, compra de obras
-- Le avisa a Cecilia (mail/mensaje) cuando hay un interesado
-- Pendiente definir si también asiste a Cecilia (redactar descripciones, textos para Instagram, etc.)
+## Typography
 
-## Talleres / Clases
-- Todavía sin diseñar (placeholders)
+Una sola familia, Archivo, en dos pesos: 800 para títulos (siempre con letter-spacing negativo, `-0.03em`) y 400 para texto de cuerpo. Los "kickers" (etiquetas de sección) son mayúsculas 11px con tracking positivo (`0.12em`) — el contraste entre tracking negativo en títulos y positivo en kickers es intencional. Sin itálicas ni pesos intermedios.
 
-## Backend (próximo paso)
-- Next.js + Supabase: auth con Google, base de datos de obras, storage de imágenes
-- Conectar Instagram vía API oficial (requiere cuenta profesional vinculada a Facebook)
+## Layout
 
-## Pendiente
-- Definir tipo de remate y forma de cobro
-- Diseñar Talleres y Clases
-- Rol final del chatbot
-- Confirmar cuenta de Instagram profesional/vinculada
-- Hosting y dominio definitivos
+- Contenedor central `max-width: 1360px` (Home) / `1100px` (Panel), padding lateral 32px que baja a 16px en ≤900px.
+- Galería/Remates: grilla de 4 columnas en desktop → 2 en tablet (≤1100px) → 1 en celular (≤560px).
+- Panel de Cecilia: layout de dos columnas (`.9fr 1.4fr`) que colapsa a una sola columna en ≤900px.
+- Sección de chat en Home: dos columnas (texto + widget) que colapsan a una en ≤800px.
+
+## Elevation & Depth
+
+Tres niveles de sombra suave con tinte de tinta (`--shadow-sm/md/lg`, nunca negro puro). Se usan en tarjetas del panel y al hacer hover sobre tarjetas de obra. La escena de museo es la única zona con sombras dramáticas (drop shadows del marco, inset bevels) — deliberadamente más teatral que el resto del sitio, que es plano.
+
+## Shapes
+
+Radios de tres tamaños: `8px` (chico, inputs/fotos), `14px` (medio, tarjetas), `24px` (grande, contenedores destacados) — más un `999px` para botones/pills y chips. Esto reemplaza los radios en 0 del Modernist original; es el cambio más visible del sistema evolucionado.
+
+## Components
+
+- **btn-primary**: fondo acento, texto bone, pill. Hover sube 2px y escala levemente con rebote; nunca transición lineal.
+- **btn-secondary**: borde divisor, fondo transparente.
+- **gcard** (tarjeta de obra en Galería/Remates): imagen 1:1, radio lg, sombra sm, hover `translateY(-6px) rotate(-.4deg)` + sombra lg. Precio siempre en acento, negrita.
+- **chat widget**: fondo blanco (no bone, para legibilidad), burbujas con radio 14px y esquina "cola" de 4px, punto de estado con pulso animado.
+- **item-card** (panel, Talleres/Clases): cabecera con número circular en acento sobre fondo surface, cuerpo con padding generoso (32px).
+- **tabs** (panel): pills, activa = fondo tinta/texto bone.
+
+## Do's and Don'ts
+
+- **Hacer**: rebote (`--bounce`) en toda transición interactiva; kickers en mayúscula con tracking positivo; un solo acento (rojo) para toda acción primaria.
+- **No hacer**: no usar gris plano para texto (siempre tinta con opacidad); no mezclar radios del Modernist original (0) con el sistema actual; no usar otra tipografía además de Archivo; no prometer visualmente algo simulado (pagos, Instagram real) sin dejarlo claro en el copy.
