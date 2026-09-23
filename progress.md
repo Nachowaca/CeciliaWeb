@@ -6,6 +6,11 @@ Prototipo en `design_handoff_cecilia_home/` (HTML/CSS/JS estático, sin backend 
 ## Actualización
 Acento cambiado de rojo a azul cobalto `#1d4ed8` (contraste 6:1 AA), porque el azul es el color predilecto de Cecilia. Se agregó un recorrido guiado en la Home (botón "Recorrido guiado" / `?tour=1`) para presentarle la web.
 
+## Hecho hoy (2026-09-23)
+Acento azul cobalto, recorrido guiado (`?tour=1`), mockups de marco elegibles, recorte guiado 4:5, ficha de obra con medidas, hovers sutiles, luz azul en el nombre y estado de obra (Disponible/Reservada/Vendida). Publicado en https://nachowaca.github.io/CeciliaWeb/
+
+**Próximo**: revisar celular, paleta 100% azul, tarjetas de Talleres/Clases con "Consultar", chat flotante, vista previa en el panel, filtros, feed de Instagram, accesibilidad (aviso de bajo contraste del detector), carga de imágenes.
+
 ## Hecho hasta ahora
 
 ### Home (`Cecilia Home v2.html` + `styles-v2.css`)
