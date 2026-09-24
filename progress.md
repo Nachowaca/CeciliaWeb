@@ -6,6 +6,15 @@ Prototipo en `design_handoff_cecilia_home/` (HTML/CSS/JS estático, sin backend 
 ## Actualización
 Acento cambiado de rojo a azul cobalto `#1d4ed8` (contraste 6:1 AA), porque el azul es el color predilecto de Cecilia. Se agregó un recorrido guiado en la Home (botón "Recorrido guiado" / `?tour=1`) para presentarle la web.
 
+## Cómo retomar
+- **Web publicada** (limpia): https://nachowaca.github.io/CeciliaWeb/
+- **Con recorrido guiado** (para presentar): `.../design_handoff_cecilia_home/Cecilia%20Home%20v2.html?tour=1`
+- **Panel de Cecilia**: `.../design_handoff_cecilia_home/Cecilia%20Admin%20v2.html`
+- **Local**: `cd design_handoff_cecilia_home && python3 -m http.server 8934`, luego abrir `http://localhost:8934/Cecilia%20Home%20v2.html`.
+- Los datos del panel viven en `localStorage` (clave `cecilia_site_v1`), por navegador y dirección; hasta Supabase no se comparten.
+- Sin subir a git a propósito: `assets/fondo1.jpeg` y `assets/Gemini_Generated_Image_...jpeg` (fondos de sala descartados, 1,4MB c/u).
+- Próximo: ver la sección "Próximo" más abajo (empezar por celular).
+
 ## Hecho hoy (2026-09-23)
 - Acento cambiado de rojo a azul cobalto `#1d4ed8`.
 - Recorrido guiado (`?tour=1`) y publicación en GitHub Pages: https://nachowaca.github.io/CeciliaWeb/
