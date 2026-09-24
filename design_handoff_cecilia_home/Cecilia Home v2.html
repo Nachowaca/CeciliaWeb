@@ -663,7 +663,8 @@ const initial=location.hash.replace('#','');
 if(['galeria','talleres','clases','remates'].includes(initial))go(initial);
 </script>
 <style>
-.tour-fab{position:fixed;right:20px;bottom:20px;z-index:60;box-shadow:var(--shadow-lg)}
+.tour-fab{display:none;position:fixed;right:20px;bottom:20px;z-index:60;box-shadow:var(--shadow-lg)}
+body.tour-on .tour-fab{display:inline-flex}
 .tour-spot{position:fixed;z-index:70;border-radius:var(--radius-md);box-shadow:0 0 0 9999px rgba(20,24,40,.62),0 0 0 3px var(--color-accent-400);pointer-events:none;transition:all .5s var(--bounce)}
 .tour-tip{position:fixed;z-index:71;width:min(340px,calc(100vw - 32px));background:#fff;color:var(--color-text);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-lg);transition:all .5s var(--bounce);animation:tourIn .4s var(--bounce)}
 @keyframes tourIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
@@ -721,7 +722,7 @@ place();setTimeout(place,600);
 }
 document.getElementById('tourFab').addEventListener('click',()=>show(0));
 document.addEventListener('keydown',e=>{if(i<0)return;if(e.key==='Escape')end();if(e.key==='ArrowRight'&&i<S.length-1)show(i+1);if(e.key==='ArrowLeft'&&i>0)show(i-1)});
-if(/[?&]tour=1/.test(location.search))setTimeout(()=>show(0),800);
+if(/[?&]tour=1/.test(location.search)){document.body.classList.add('tour-on');setTimeout(()=>show(0),800)}
 if(window.lucide)lucide.createIcons();
 })();
 </script>
