@@ -37,6 +37,9 @@ Acento cambiado de rojo a azul cobalto `#1d4ed8` (contraste 6:1 AA), porque el a
 - Límite: los pedidos viven en `localStorage` (`cecilia_orders_v1`) del navegador del visitante; Cecilia no los ve desde otro dispositivo hasta Supabase.
 - Preferencia de trabajo: modo ahorro (respuestas cortas, confirmar antes de memorias/artefactos), hasta que Ignacio pida más razonamiento. Siempre actualizar este archivo.
 
+## Hecho (2026-10-04) — Mail de contacto
+- Mail real `chechalisboa@gmail.com` en el pie de la web (link `mailto:`) y en la respuesta del chatbot (también como link clickeable). Reemplaza el placeholder `contacto@cecilia.uy`.
+
 ## Próximo
 0. Supabase para que los pedidos lleguen al panel de Cecilia desde cualquier dispositivo.
 1. Revisar celular (Home, galería, ficha, carrito, chat, tour).

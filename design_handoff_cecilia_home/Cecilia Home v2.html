@@ -394,7 +394,7 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <div class="col">
 <span class="kick">Contacto</span>
 <ul>
-<li><a href="#">contacto@cecilia.uy</a></li>
+<li><a href="mailto:chechalisboa@gmail.com">chechalisboa@gmail.com</a></li>
 <li>Montevideo, Uruguay</li>
 </ul>
 </div>
@@ -650,14 +650,15 @@ document.getElementById('replay').onclick=replay;
 
 const msgs=document.getElementById('msgs'),form=document.getElementById('chatForm'),inp=document.getElementById('chatIn');
 let stage='idle',lead={};
-function add(t,who='bot',cls=''){const d=document.createElement('div');d.className='msg '+who+' '+cls;d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight}
+const MAIL='chechalisboa@gmail.com';
+function add(t,who='bot',cls=''){const d=document.createElement('div');d.className='msg '+who+' '+cls;if(who==='bot'&&t.includes(MAIL)){const [a,b]=t.split(MAIL),l=document.createElement('a');l.href='mailto:'+MAIL;l.textContent=MAIL;d.append(a,l,b)}else d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight}
 function bot(t,cls){const ty=document.createElement('div');ty.className='typing';ty.textContent='Escribiendo…';msgs.appendChild(ty);msgs.scrollTop=msgs.scrollHeight;setTimeout(()=>{ty.remove();add(t,'bot',cls)},700)}
 function reply(t){
 const s=t.toLowerCase();
 if(stage==='name'){lead.name=t;stage='email';return bot('Gracias, '+t.split(' ')[0]+'. ¿A qué mail o WhatsApp te puede responder Cecilia?')}
 if(stage==='email'){lead.contact=t;stage='msg';return bot('Perfecto. Contame en una línea qué te interesa y se lo paso.')}
 if(stage==='msg'){stage='idle';return bot('Listo, le envié tu mensaje a Cecilia. Te va a responder a '+lead.contact+'.','ok')}
-if(/mail|contacto|correo|email/.test(s))return bot('Podés escribirle directo a contacto@cecilia.uy, o dejarme tu consulta acá y se la paso igual.')
+if(/mail|contacto|correo|email/.test(s))return bot('Podés escribirle directo a chechalisboa@gmail.com, o dejarme tu consulta acá y se la paso igual.')
 if(/evento|exposici|muestra|inaugura/.test(s))return bot('Por ahora no hay eventos anunciados, pero avisale a Cecilia que te interesa y te avisa apenas tenga fecha.')
 if(/nueva|novedad|últimas obras|ultimas obras/.test(s))return bot(`Tiene ${WORKS.length} obras publicadas en la Galería ahora mismo. Date una vuelta y elegí la que más te guste.`)
 if(/remate|subast|puja|ofert/.test(s))return bot('En Remates vas a ver las obras disponibles y cómo ofertar. Si querés, le aviso a Cecilia que te interesa una obra puntual.')
