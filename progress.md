@@ -40,6 +40,9 @@ Acento cambiado de rojo a azul cobalto `#1d4ed8` (contraste 6:1 AA), porque el a
 ## Hecho (2026-10-04) — Mail de contacto
 - Mail real `chechalisboa@gmail.com` en el pie de la web (link `mailto:`) y en la respuesta del chatbot (también como link clickeable). Reemplaza el placeholder `contacto@cecilia.uy`.
 
+- Pie de la web: ubicación "Maldonado, Uruguay" y botón verde "Escribir por WhatsApp". Hoy muestra "Pronto vas a poder escribirle por WhatsApp" porque falta el número real: cargarlo en `WA_NUMBER` (en `Cecilia Home v2.html`, con código de país, ej. `59899123456`) o desde Supabase más adelante.
+- Ojo: los talleres/clases de ejemplo (`DEFAULTS` en Home y Admin) todavía dicen "Montevideo"; son datos de muestra editables desde el panel.
+
 ## Próximo
 0. Supabase para que los pedidos lleguen al panel de Cecilia desde cualquier dispositivo.
 1. Revisar celular (Home, galería, ficha, carrito, chat, tour).

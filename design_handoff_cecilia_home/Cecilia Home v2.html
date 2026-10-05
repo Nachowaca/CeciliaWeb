@@ -171,6 +171,9 @@ footer{border-top:2px solid var(--color-divider)}
 footer .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0}
 footer .col{padding:var(--space-6) var(--space-6) var(--space-8) 0}
 footer .col+.col{border-left:2px solid var(--color-divider);padding-left:var(--space-6)}
+.wa-btn{display:inline-flex;align-items:center;gap:8px;background:#0a7c4a;color:#fff;border-radius:999px;padding:9px 16px;font-weight:700;font-size:14px;text-decoration:none;transition:transform .25s var(--bounce),box-shadow .2s}
+.wa-btn:hover{color:#fff;transform:translateY(-1px) scale(1.02);box-shadow:var(--shadow-sm)}
+.wa-note{display:block;margin-top:6px;font-size:13px;color:var(--color-neutral-700)}
 footer .col p{font-size:14px;margin:0}
 footer ul{list-style:none;margin:var(--space-3) 0 0;padding:0;display:grid;gap:6px;font-size:14px}
 footer ul button{font:inherit;background:none;border:0;padding:0;cursor:pointer;color:var(--color-text);display:inline-block;transition:transform .2s var(--bounce),color .15s}
@@ -395,7 +398,8 @@ footer .col+.col{border-top:2px solid var(--color-divider)}
 <span class="kick">Contacto</span>
 <ul>
 <li><a href="mailto:chechalisboa@gmail.com">chechalisboa@gmail.com</a></li>
-<li>Montevideo, Uruguay</li>
+<li>Maldonado, Uruguay</li>
+<li><a class="wa-btn" id="waBtn" href="#"><i data-lucide="message-circle" width="16" height="16"></i>Escribir por WhatsApp</a><span class="wa-note" id="waNote" hidden>Pronto vas a poder escribirle por WhatsApp.</span></li>
 </ul>
 </div>
 </div>
@@ -651,6 +655,11 @@ document.getElementById('replay').onclick=replay;
 const msgs=document.getElementById('msgs'),form=document.getElementById('chatForm'),inp=document.getElementById('chatIn');
 let stage='idle',lead={};
 const MAIL='chechalisboa@gmail.com';
+const WA_NUMBER=''; // celular real con código de país, sin + ni espacios (ej: 59899123456)
+document.getElementById('waBtn').addEventListener('click',e=>{
+if(WA_NUMBER)return e.currentTarget.setAttribute('href','https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent('Hola Cecilia, te escribo desde tu web.'));
+e.preventDefault();document.getElementById('waNote').hidden=false;
+});
 function add(t,who='bot',cls=''){const d=document.createElement('div');d.className='msg '+who+' '+cls;if(who==='bot'&&t.includes(MAIL)){const [a,b]=t.split(MAIL),l=document.createElement('a');l.href='mailto:'+MAIL;l.textContent=MAIL;d.append(a,l,b)}else d.textContent=t;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight}
 function bot(t,cls){const ty=document.createElement('div');ty.className='typing';ty.textContent='Escribiendo…';msgs.appendChild(ty);msgs.scrollTop=msgs.scrollHeight;setTimeout(()=>{ty.remove();add(t,'bot',cls)},700)}
 function reply(t){
