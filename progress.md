@@ -30,7 +30,15 @@ Acento cambiado de rojo a azul cobalto `#1d4ed8` (contraste 6:1 AA), porque el a
 - Frase en la pared de la sala, a la derecha del cuadro destacado (Archivo 300). Se probó una foto de sala como fondo y se volvió al fondo neutro arena/crema.
 - Pendiente de decidir: `assets/fondo1.jpeg` y `assets/Gemini_Generated_Image_...jpeg` (fondos de sala de 1,4MB, sin usar ni subir a git).
 
+## Hecho (2026-10-04) — Flujo de ventas
+- Precios opcionales: Cecilia los define o edita en cada tarjeta del panel; vacío = "Consultar precio". Total del carrito: "USD X + N a consultar".
+- Pedido con nombre, contacto y mensaje opcional (para consultar o proponer precio). Cobro lo coordina Cecilia por fuera.
+- Pestaña "Pedidos" en el panel: aviso con cantidad de nuevos, responder por WhatsApp/mail (09xxxxxxx se convierte a +598), estado Nuevo/Contactado/Cerrado, "Reservar obras" y eliminar con confirmación. Texto de visitantes escapado (sin inyección HTML).
+- Límite: los pedidos viven en `localStorage` (`cecilia_orders_v1`) del navegador del visitante; Cecilia no los ve desde otro dispositivo hasta Supabase.
+- Preferencia de trabajo: modo ahorro (respuestas cortas, confirmar antes de memorias/artefactos), hasta que Ignacio pida más razonamiento. Siempre actualizar este archivo.
+
 ## Próximo
+0. Supabase para que los pedidos lleguen al panel de Cecilia desde cualquier dispositivo.
 1. Revisar celular (Home, galería, ficha, carrito, chat, tour).
 2. Paleta 100% azul (fondo, escena de museo, tonos secundarios).
 3. Talleres/Clases con tarjetas de fotos grandes y botón "Consultar".

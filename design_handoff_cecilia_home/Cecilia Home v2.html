@@ -122,8 +122,9 @@ body[data-page="clases"] .gallery-page#clasesPage{display:block}
 .cart-foot{border-top:2px solid var(--color-divider);padding:16px 20px;display:flex;flex-direction:column;gap:12px}
 .cart-total{display:flex;justify-content:space-between;font-weight:800;font-size:15px}
 .order-form{display:flex;flex-direction:column;gap:8px}
-.order-form input{padding:9px 12px;font:inherit;font-size:13.5px;border:1.5px solid var(--color-divider);border-radius:var(--radius-sm);background:var(--color-surface)}
-.order-form input:focus-visible{outline:none;border-color:var(--color-accent)}
+.order-form input,.order-form textarea{padding:9px 12px;font:inherit;font-size:13.5px;border:1.5px solid var(--color-divider);border-radius:var(--radius-sm);background:var(--color-surface)}
+.order-form textarea{resize:vertical;min-height:70px}
+.order-form input:focus-visible,.order-form textarea:focus-visible{outline:none;border-color:var(--color-accent)}
 .order-success{background:var(--color-accent-100);color:var(--color-accent-800);padding:12px 14px;border-radius:var(--radius-md);font-size:13.5px;font-weight:700;text-align:center}
 #home{animation:popIn .5s var(--bounce) both}
 /* gallery */
@@ -469,6 +470,8 @@ function renderIg(){
 const imgs=WORKS.map(w=>w.img);if(!imgs.length)return;
 document.getElementById('igGrid').innerHTML=Array.from({length:6},(_,i)=>`<a href="https://www.instagram.com/ce_lisboa/" target="_blank" rel="noopener" aria-label="Ver publicación en Instagram"><img loading="lazy" alt="Publicación de Cecilia" src="${imgs[i%imgs.length]}"></a>`).join('');
 }
+const priceOf=w=>{const n=parseFloat(w.price);return n>0?n:null};
+const priceLabel=w=>priceOf(w)?`USD ${priceOf(w)}`:'Consultar precio';
 const ST={disponible:'Disponible',reservada:'Reservada',vendida:'Vendida'};
 const stOf=w=>w.status||'disponible';
 const chipHTML=w=>stOf(w)==='disponible'?'':`<span class="chip st-${stOf(w)}">${ST[stOf(w)]}</span>`;
@@ -479,7 +482,7 @@ document.getElementById('galleryGrid').innerHTML=WORKS.map(w=>`
 ${mockHTML(w,{attrs:` data-ficha="${w.id}" role="button" tabindex="0" aria-label="Ver ${w.title} en grande"`})}
 <figcaption>
 <span>${w.title} · ${w.technique}</span>
-<span class="gcard-price">USD ${w.price}</span>
+<span class="gcard-price">${priceLabel(w)}</span>
 <div class="gcard-actions">
 <button class="btn btn-primary ig-btn" data-obra="${w.id}"><i data-lucide="instagram" width="16" height="16"></i>Postear</button>
 <button class="btn btn-secondary buy-btn" data-go="remates" data-obra="${w.id}" ${stOf(w)!=='disponible'?'disabled':''}><i data-lucide="gavel" width="16" height="16"></i>${stOf(w)==='disponible'?'Comprar':ST[stOf(w)]}</button>
@@ -518,7 +521,7 @@ grid.innerHTML=cart.map(w=>`
 ${mockHTML(w,{chip:false})}
 <figcaption>
 <span>${w.title} · ${w.technique}</span>
-<span class="gcard-price">USD ${w.price}</span>
+<span class="gcard-price">${priceLabel(w)}</span>
 <div class="gcard-actions">
 <button class="btn btn-secondary remove-btn" data-obra="${w.id}"><i data-lucide="x" width="16" height="16"></i>Quitar</button>
 </div>
@@ -551,7 +554,7 @@ const fichaOv=document.getElementById('fichaOv');
 function openFicha(id){
 const w=WORKS.find(x=>x.id===id);if(!w)return;
 document.getElementById('fichaMock').innerHTML=mockHTML(w,{lazy:false});
-document.getElementById('fichaInfo').innerHTML=`<span class="kick" style="color:var(--color-accent)">Obra</span><h2>${w.title}</h2><dl><dt>Técnica</dt><dd>${w.technique}</dd><dt>Estado</dt><dd>${ST[stOf(w)]}</dd>${w.size?`<dt>Medidas</dt><dd>${w.size}</dd>`:''}</dl><div class="ficha-price">USD ${w.price}</div><div class="ficha-actions"><button class="btn btn-primary buy-btn" data-go="remates" data-obra="${w.id}" ${stOf(w)!=='disponible'?'disabled':''}><i data-lucide="gavel" width="16" height="16"></i>${stOf(w)==='disponible'?'Comprar':ST[stOf(w)]}</button><button class="btn btn-primary ig-btn" data-obra="${w.id}"><i data-lucide="instagram" width="16" height="16"></i>Postear en Instagram</button></div>`;
+document.getElementById('fichaInfo').innerHTML=`<span class="kick" style="color:var(--color-accent)">Obra</span><h2>${w.title}</h2><dl><dt>Técnica</dt><dd>${w.technique}</dd><dt>Estado</dt><dd>${ST[stOf(w)]}</dd>${w.size?`<dt>Medidas</dt><dd>${w.size}</dd>`:''}</dl><div class="ficha-price">${priceLabel(w)}</div><div class="ficha-actions"><button class="btn btn-primary buy-btn" data-go="remates" data-obra="${w.id}" ${stOf(w)!=='disponible'?'disabled':''}><i data-lucide="gavel" width="16" height="16"></i>${stOf(w)==='disponible'?'Comprar':ST[stOf(w)]}</button><button class="btn btn-primary ig-btn" data-obra="${w.id}"><i data-lucide="instagram" width="16" height="16"></i>Postear en Instagram</button></div>`;
 fichaOv.classList.add('on');lucide.createIcons();
 }
 function closeFicha(){fichaOv.classList.remove('on')}
@@ -591,7 +594,7 @@ else{
 items.innerHTML=cart.map(w=>`
 <div class="cart-item">
 <img src="${w.img}" alt="${w.title}">
-<div class="ci-info"><span class="ci-title">${w.title}</span><span class="ci-price">USD ${w.price}</span></div>
+<div class="ci-info"><span class="ci-title">${w.title}</span><span class="ci-price">${priceLabel(w)}</span></div>
 <button class="ci-remove" data-remove="${w.id}" aria-label="Quitar"><i data-lucide="x" width="16" height="16"></i></button>
 </div>`).join('');
 lucide.createIcons();
@@ -600,37 +603,45 @@ items.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>removeFromCart(
 renderCartFoot();
 renderRemates();
 }
+function totalLabel(){
+const priced=cart.filter(priceOf),sum=priced.reduce((a,w)=>a+priceOf(w),0),unp=cart.length-priced.length;
+return sum?`USD ${sum}${unp?' + '+unp+' a consultar':''}`:'A consultar';
+}
 function renderCartFoot(){
 const foot=document.getElementById('cartFoot');
 if(!cart.length){foot.innerHTML='';return}
-const total=cart.reduce((a,w)=>a+w.price,0);
 foot.innerHTML=`
-<div class="cart-total"><span>Total</span><span>USD ${total}</span></div>
+<div class="cart-total"><span>Total</span><span>${totalLabel()}</span></div>
 <button class="btn btn-primary submit-btn" id="sendOrderBtn" style="border-radius:999px;justify-content:center">Enviar pedido</button>`;
 document.getElementById('sendOrderBtn').onclick=showOrderForm;
 }
 function showOrderForm(){
 const foot=document.getElementById('cartFoot');
-const total=cart.reduce((a,w)=>a+w.price,0);
 foot.innerHTML=`
-<div class="cart-total"><span>Total</span><span>USD ${total}</span></div>
+<div class="cart-total"><span>Total</span><span>${totalLabel()}</span></div>
 <form class="order-form" id="orderForm">
 <input id="ordName" placeholder="Tu nombre" required>
 <input id="ordContact" placeholder="Mail o WhatsApp" required>
+<textarea id="ordMsg" rows="3" placeholder="Mensaje para Cecilia (opcional): consultá el precio o proponé uno"></textarea>
 <button class="btn btn-primary submit-btn" type="submit" style="border-radius:999px;justify-content:center">Confirmar pedido</button>
 </form>`;
 document.getElementById('orderForm').onsubmit=e=>{
 e.preventDefault();
 const name=document.getElementById('ordName').value.trim();
 const contact=document.getElementById('ordContact').value.trim();
+saveOrder({id:'o'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),date:new Date().toISOString(),name,contact,message:document.getElementById('ordMsg').value.trim(),status:'nuevo',items:cart.map(w=>({id:w.id,title:w.title,price:priceOf(w)}))});
 cart=[];
 const badge=document.getElementById('cartBadge');
 badge.textContent='0';badge.hidden=true;
 document.getElementById('cartItems').innerHTML='<div class="cart-empty">Todavía no elegiste ninguna obra.</div>';
-foot.innerHTML=`<div class="order-success">¡Listo, ${name.split(' ')[0]}! Le avisamos a Cecilia y te va a escribir a ${contact} para coordinar el pago y la entrega.</div>`;
+const ok=document.createElement('div');ok.className='order-success';
+ok.textContent=`¡Listo, ${name.split(' ')[0]}! Cecilia recibió tu pedido y te va a escribir a ${contact} para coordinar precio, pago y entrega.`;
+foot.replaceChildren(ok);
 renderRemates();
 };
 }
+const ORDERS_KEY='cecilia_orders_v1';
+function saveOrder(o){try{const a=JSON.parse(localStorage.getItem(ORDERS_KEY)||'[]');a.unshift(o);localStorage.setItem(ORDERS_KEY,JSON.stringify(a))}catch(e){}}
 renderCart();
 
 const world=document.getElementById('world');

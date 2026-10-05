@@ -117,6 +117,25 @@ body.logged-in .login-screen{display:none}
 /* published note */
 .note{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-neutral-700);margin-top:var(--space-4)}
 .note i{color:var(--color-accent);flex:none}
+.tab-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;margin-left:6px;border-radius:999px;background:var(--color-accent);color:#fff;font-size:11px;font-weight:800}
+.tab-badge[hidden]{display:none}
+.tab-btn.active .tab-badge{background:#fff;color:var(--color-text)}
+#ordersList{display:flex;flex-direction:column;gap:var(--space-4)}
+.ord{background:#fff;border:1.5px solid rgba(32,30,29,.14);border-radius:var(--radius-lg);padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3)}
+.ord.new{border-color:var(--color-accent);box-shadow:0 0 0 3px var(--color-accent-100)}
+.ord-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.ord-head b{font-size:17px;display:block}
+.ord-date{font-size:12px;color:var(--color-neutral-700)}
+.ord-st{width:auto;min-width:150px}
+.ord-contact{font-weight:600;font-size:14px;word-break:break-word}
+.ord-items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ord-items li{display:flex;align-items:center;gap:12px;font-size:14px}
+.ord-items img{width:44px;height:44px;border-radius:var(--radius-sm);object-fit:cover}
+.ord-items span{flex:1}
+.ord-msg{margin:0;padding:12px 14px;background:var(--color-surface);border-radius:var(--radius-md);font-size:14px;white-space:pre-wrap;word-break:break-word}
+.ord-actions{display:flex;gap:8px;flex-wrap:wrap}
+.ord-actions .btn{border-radius:999px}
+.wcard .wpin{width:90px;min-height:30px;padding:3px 8px;font-size:13px;margin-left:4px}
 </style>
 </head>
 <body>
@@ -157,6 +176,7 @@ Ingresar con Google
 <button class="tab-btn" data-tab="galeria">Galería</button>
 <button class="tab-btn" data-tab="talleres">Talleres</button>
 <button class="tab-btn" data-tab="clases">Clases</button>
+<button class="tab-btn" data-tab="pedidos">Pedidos<span class="tab-badge" id="ordBadge" hidden>0</span></button>
 </div>
 
 <!-- ===== INICIO ===== -->
@@ -215,8 +235,8 @@ Ingresar con Google
 <input id="fTechnique" placeholder="Óleo sobre tela" value="Óleo sobre tela">
 </div>
 <div class="field">
-<label for="fPrice">Precio (USD)</label>
-<input id="fPrice" placeholder="350">
+<label for="fPrice">Precio (USD, opcional)</label>
+<input id="fPrice" type="number" min="0" placeholder="Vacío = a consultar">
 </div>
 </div>
 <div class="field">
@@ -253,6 +273,11 @@ Ingresar con Google
 <button class="add-btn" id="addClase"><i data-lucide="plus" width="16" height="16"></i>Agregar clase</button>
 <button class="btn btn-primary submit-btn" id="saveClases" style="max-width:280px"><i data-lucide="save" width="16" height="16"></i>Guardar cambios</button>
 <div class="toast" id="toastClases"><i data-lucide="check-circle-2" width="16" height="16"></i>¡Guardado! Ya se ve en tu web.</div>
+</div>
+
+<!-- ===== PEDIDOS ===== -->
+<div class="tab-panel" id="panel-pedidos">
+<div id="ordersList"></div>
 </div>
 
 <div class="note"><i data-lucide="sparkles" width="14" height="14"></i>Diseño de muestra — guarda en este navegador. La versión final se conecta a una base de datos real.</div>
@@ -404,7 +429,7 @@ list.innerHTML=site.works.map(w=>`
 ${w.id===highlightId?'<span class="wtag">Nueva</span>':''}
 <span class="wtitle">${w.title}</span>
 <span class="wmeta">${w.technique}</span>
-<span class="wprice">USD ${w.price}</span>
+<label class="wprice">USD<input type="number" min="0" class="input wpin" data-w="${w.id}" data-k="price" placeholder="A consultar" value="${w.price||''}" aria-label="Precio"></label>
 <select class="input wframe" data-w="${w.id}" data-k="status" aria-label="Estado">${opts(STATUSES,w.status||'disponible')}</select>
 <select class="input wframe" data-w="${w.id}" data-k="frame" aria-label="Marco">${opts(FRAMES,w.frame||'madera')}</select>
 </div>
@@ -421,7 +446,7 @@ document.getElementById('uploadForm').onsubmit=e=>{
 e.preventDefault();
 const title=document.getElementById('fTitle').value.trim()||'Sin título';
 const technique=document.getElementById('fTechnique').value.trim()||'Óleo sobre tela';
-const price=document.getElementById('fPrice').value.trim()||'0';
+const price=document.getElementById('fPrice').value.trim();
 const id=uid('w');
 site.works=[{id,img:pendingImg||'https://picsum.photos/500/625?random='+Date.now(),title,technique,price,size:document.getElementById('fSize').value.trim(),status:document.getElementById('fStatus').value,frame:document.getElementById('fFrame').value},...site.works];
 saveStore();
@@ -504,6 +529,54 @@ document.getElementById('saveClases').onclick=()=>{saveStore();toast('toastClase
 
 // ---------- init ----------
 fillInicioForm();
+// ---------- PEDIDOS ----------
+const ORDERS_KEY='cecilia_orders_v1';
+const OSTATUS=[['nuevo','Nuevo'],['contactado','Contactado'],['cerrado','Cerrado']];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const loadOrders=()=>{try{return JSON.parse(localStorage.getItem(ORDERS_KEY)||'[]')}catch(e){return[]}};
+const saveOrders=a=>{try{localStorage.setItem(ORDERS_KEY,JSON.stringify(a))}catch(e){}};
+function contactLink(c){
+c=(c||'').trim();
+if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c))return{href:'mailto:'+c,label:'Responder por mail'};
+let d=c.replace(/\D/g,'');
+if(d.length<7)return null;
+if(/^09\d{7}$/.test(d))d='598'+d.slice(1);
+return{href:'https://wa.me/'+d,label:'Responder por WhatsApp'};
+}
+function renderOrders(){
+const a=loadOrders(),n=a.filter(o=>o.status==='nuevo').length,b=document.getElementById('ordBadge');
+b.textContent=n;b.hidden=!n;
+const list=document.getElementById('ordersList');
+if(!a.length){list.innerHTML='<div class="empty">Todavía no te llegó ningún pedido. Cuando alguien elija obras y confirme, aparece acá.</div>';return}
+list.innerHTML=a.map(o=>{
+const link=contactLink(o.contact),d=new Date(o.date);
+return `<article class="ord ${o.status==='nuevo'?'new':''}" data-o="${esc(o.id)}">
+<div class="ord-head"><div><b>${esc(o.name)}</b><span class="ord-date">${d.toLocaleDateString('es-UY',{day:'numeric',month:'short'})} · ${d.toLocaleTimeString('es-UY',{hour:'2-digit',minute:'2-digit'})}</span></div>
+<select class="input ord-st" aria-label="Estado del pedido">${opts(OSTATUS,o.status)}</select></div>
+<div class="ord-contact">${esc(o.contact)}</div>
+<ul class="ord-items">${(o.items||[]).map(i=>{const w=site.works.find(x=>x.id===i.id);return `<li>${w?`<img src="${esc(w.img)}" alt="">`:''}<span>${esc(i.title)}</span><b>${i.price?'USD '+esc(i.price):'A consultar'}</b></li>`}).join('')}</ul>
+${o.message?`<p class="ord-msg">&ldquo;${esc(o.message)}&rdquo;</p>`:''}
+<div class="ord-actions">${link?`<a class="btn btn-primary" href="${esc(link.href)}" target="_blank" rel="noopener">${link.label}</a>`:''}<button class="btn btn-secondary" data-ores>Reservar obras</button><button class="btn btn-secondary" data-odel>Eliminar</button></div>
+</article>`}).join('');
+}
+const ordersList=document.getElementById('ordersList');
+const orderOf=(el,a)=>a.find(o=>o.id===el.closest('[data-o]').dataset.o);
+ordersList.onchange=e=>{
+if(!e.target.matches('.ord-st'))return;
+const a=loadOrders();orderOf(e.target,a).status=e.target.value;saveOrders(a);renderOrders();
+};
+ordersList.onclick=e=>{
+const res=e.target.closest('[data-ores]'),del=e.target.closest('[data-odel]');
+if(!res&&!del)return;
+const a=loadOrders(),o=orderOf(e.target,a);
+if(res){
+(o.items||[]).forEach(i=>{const w=site.works.find(x=>x.id===i.id);if(w&&(w.status||'disponible')==='disponible')w.status='reservada'});
+saveStore();renderWorks();res.textContent='Obras reservadas';res.disabled=true;
+}else if(confirm('¿Eliminar este pedido?')){saveOrders(a.filter(x=>x.id!==o.id));renderOrders()}
+};
+window.addEventListener('storage',e=>{if(e.key===ORDERS_KEY)renderOrders()});
+renderOrders();
+
 renderWorks();
 renderList('taller');
 renderList('clase');

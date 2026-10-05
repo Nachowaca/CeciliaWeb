@@ -104,7 +104,9 @@ Radios de tres tamaños: `8px` (chico, inputs/fotos), `14px` (medio, tarjetas), 
 - **miniatura de Instagram**: tarjeta de perfil (@ce_lisboa) con grilla de 6 imágenes y botón grande "Seguir en Instagram", en vez de un ícono con link. Hoy usa las obras de ejemplo como imágenes.
 - **frase en la pared**: "El arte no reproduce aquello que es visible, sino que hace visible aquello que no siempre lo es." en Archivo 300, a la derecha del cuadro destacado, alineada a la derecha y en tinta al 90%; aparece con fundido al final de la caminata. En celular pasa arriba del cuadro. Se probó una foto de sala como fondo y se descartó: el fondo sigue siendo la pared arena/crema con degradado.
 - **retrato**: foto circular de 46px junto al nombre en el encabezado (`assets/cecilia-retrato.jpg`).
-- **recorrido guiado**: 8 pasos con foco animado sobre la web real (`?tour=1` o botón flotante).
+- **pedido y bandeja**: carrito con total "USD X + N a consultar"; formulario con mensaje opcional. En el panel, pestaña Pedidos con tarjetas (borde azul si es nuevo), estado, responder por WhatsApp/mail y reservar obras.
+- **precio**: opcional; sin precio se muestra "Consultar precio".
+- **recorrido guiado**: 11 pasos con foco animado sobre la web real (`?tour=1` o botón flotante).
 
 ## Do's and Don'ts
 
