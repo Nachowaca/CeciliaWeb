@@ -43,15 +43,26 @@ Acento cambiado de rojo a azul cobalto `#1d4ed8` (contraste 6:1 AA), porque el a
 - Pie de la web: ubicación "Maldonado, Uruguay" y botón verde "Escribir por WhatsApp". Hoy muestra "Pronto vas a poder escribirle por WhatsApp" porque falta el número real: cargarlo en `WA_NUMBER` (en `Cecilia Home v2.html`, con código de país, ej. `59899123456`) o desde Supabase más adelante.
 - Ojo: los talleres/clases de ejemplo (`DEFAULTS` en Home y Admin) todavía dicen "Montevideo"; son datos de muestra editables desde el panel.
 
-## Próximo
-0. Supabase para que los pedidos lleguen al panel de Cecilia desde cualquier dispositivo.
-1. Revisar celular (Home, galería, ficha, carrito, chat, tour).
-2. Paleta 100% azul (fondo, escena de museo, tonos secundarios).
-3. Talleres/Clases con tarjetas de fotos grandes y botón "Consultar".
-4. Chat como burbuja flotante; vista previa y aviso de guardado en el panel; filtros en la Galería.
-5. Miniatura de Instagram real: widget de terceros o API oficial (junto con Supabase).
-6. Accesibilidad (aviso de bajo contraste del detector), carga de imágenes.
-7. Backend Supabase, definir tipo de remate y cobro, obras reales.
+## Próximo (lista al 2026-10-04)
+**Para que funcione de verdad**
+1. Supabase: login real de Cecilia con Gmail, base de datos compartida y fotos (hoy todo vive en el navegador; por eso los pedidos no llegan a su panel).
+2. Número real de WhatsApp en `WA_NUMBER`.
+3. Obras, talleres y clases reales (los de ejemplo dicen Montevideo).
+4. Instagram real (widget o API).
+5. Chatbot real: que los mensajes le lleguen a Cecilia por mail o WhatsApp.
+
+**Diseño**
+6. Revisar celular (Home, galería, ficha, carrito, chat, tour).
+7. Paleta 100% azul (fondo, escena de museo, tonos secundarios).
+8. Talleres/Clases con tarjetas de fotos grandes y botón "Consultar".
+9. Chat flotante, vista previa en el panel, filtros en la Galería.
+10. Accesibilidad (aviso de bajo contraste) y carga de imágenes.
+
+**Decisiones de Ignacio**
+11. Hosting y dominio definitivos (hoy GitHub Pages).
+12. Cobro online (Mercado Pago) si hace falta.
+
+**Orden sugerido**: 6, luego 1, después 3 y 4. Mañana: empezar por el celular.
 
 ## Hecho hasta ahora
 
